@@ -1,3 +1,4 @@
+/* ------------------------------------------------ */
 @import "reset-n-var.css";
 
 
@@ -10,13 +11,14 @@ a {
     text-decoration: none;
 }
 
-.menu ul {
-    list-style: none;
-    text-transform: uppercase;
-}
 
 
-.logo {
+/* Header ----------------------------------------- */
+
+
+.header .logo {
+    transition: .3s;
+    cursor: pointer;
     width: 6.5rem;
 }
 
@@ -28,6 +30,15 @@ a {
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+
+/* All menus -------------------------------------- */
+
+.menu ul {
+    list-style: none;
+    text-transform: uppercase;
+}
+
+/* Main menu -------------------------------------- */
 
 .header .menu {
     -webkit-user-select: none;
@@ -53,6 +64,19 @@ a {
     height: 100%;
     align-items: center;
     padding: 0 0.5rem;
+}
+
+/* Submenu -------------------- */
+
+/* Row icon submenu ----------- */
+.header .menu ul > li:has(ul) >a:after {
+    content: "";
+    transform: scale(.8);
+    border-left: .35rem solid transparent;
+    border-right: .35rem solid transparent;
+    border-top: .5rem solid var(--light-text-color);
+    transition: border-top-color .3s ease-out;
+    margin-left: .4rem;
 }
 
 .header .menu ul > li:hover >ul {
@@ -89,28 +113,53 @@ a {
     padding-left: 1.25rem;
 }
 
-.header .menu > ul > li:hover ~li {
-    /* filter: blur(3px); */
-}
+/* To do latter: Make all ul items go blurried when you pass the mouse on a submenu
+/* .header .menu > ul > li:hover ~li {
+    filter: blur(3px);
+} */
 
-
-/* chevron submenu */
-.header .menu ul > li:has(ul) >a:after {
-    content: "";
-    transform: scale(.8);
-    border-left: .35rem solid transparent;
-    border-right: .35rem solid transparent;
-    border-top: .5rem solid var(--light-text-color);
-    transition: border-top-color .3s ease-out;
-    margin-left: .4rem;
-}
-
-/* --- */
-
-.header .logo {
-    transition: .3s;
-    cursor: pointer;
-}
 
 @media screen and (max-width:1024px) {
 }
+
+@media screen and (max-width: 768px) {
+
+    .header .logo {
+        width: 10rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .header > .container > .wrapper {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: initial;
+        align-items: center;
+    }
+
+    .header .menu {
+        width: 100%;
+    }
+
+    .header .menu > ul {
+        flex-direction: column;
+    }
+
+    .header .menu > ul > li {
+        background-color:rgba(0, 0, 0, .3);
+        margin: .15rem 0;
+        border-radius: 5px;
+    }
+
+    .header .menu > ul > li > a {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        padding: .8rem .5rem;
+    }
+
+    /* submenu */
+
+    .header .menu ul > li > ul {
+        max-width: 100%;
+    }
+}   
