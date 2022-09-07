@@ -29,15 +29,23 @@ a {
     flex-wrap: wrap;
 }
 
+.header .menu {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .header .menu > ul {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
 }
 
-.header .menu > ul > li:hover >a {
+.header .menu > ul > li:hover >a,
+.header .menu > ul > li:hover >:after {
     color: var(--primary-color);
+    border-top-color: var(--primary-color);
 }
+
 .header .menu > ul > li > a {
     transition: color .3s ease-out;
     color: var(--light-text-color);
@@ -47,19 +55,26 @@ a {
     padding: 0 0.5rem;
 }
 
+.header .menu ul > li:hover >ul {
+    opacity: 1;
+    visibility: visible;
+}
+
 .header .menu ul > li > ul {
+    transition: opacity .4s ease-in-out;
+    opacity: 0;
     display: flex;
+    visibility: hidden;
     flex-direction: column; 
     position: absolute;
     background-color: white;
     max-width: 25vw;
-    width: -moz-fit-content;
-    width: fit-content;
-    /* width: 500px; */
+    min-width: 10vw;
 }
 
 .header .menu ul > li > ul li > a {
     display: block;
+    transition: padding-left .3s;
     color: var(--primary-dark-color);
     font-size: var(--small-font-size);
     padding: .5rem .85rem;
@@ -71,21 +86,30 @@ a {
 
 .header .menu ul > li > ul li > a:hover {
     color: var(--primary-color);
+    padding-left: 1.25rem;
 }
 
 .header .menu > ul > li:hover ~li {
-    filter: blur(3px);
+    /* filter: blur(3px); */
+}
+
+
+/* chevron submenu */
+.header .menu ul > li:has(ul) >a:after {
+    content: "";
+    transform: scale(.8);
+    border-left: .35rem solid transparent;
+    border-right: .35rem solid transparent;
+    border-top: .5rem solid var(--light-text-color);
+    transition: border-top-color .3s ease-out;
+    margin-left: .4rem;
 }
 
 /* --- */
 
-.header .logo:hover {
-    filter: saturate(50%) grayscale(10%);
-
-}
-
 .header .logo {
     transition: .3s;
+    cursor: pointer;
 }
 
 @media screen and (max-width:1024px) {
