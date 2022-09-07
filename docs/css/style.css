@@ -1,0 +1,13 @@
+@import "reset-n-var.css";
+
+
+body {
+    font: var(--normal-font-size) var(--body-font);
+}
+
+.logo {
+    width: 7rem;
+}
+
+@media screen and (max-width:1024px) {
+}
