@@ -6,16 +6,20 @@
     --primary-dark-color: #1B4A63;
     --secondary-dark-color: #0C2F41;
 
+    --light-text-color: #FAFAFA;
+
     --big-font-size: 2rem;
     --h1-font-size: 1.5rem;
     --h2-font-size: 1.25rem;
     --h3-font-size: 1.125rem;
-    --normal-font-size: 1.15rem;
+    --normal-font-size: 1.05rem;
     --small-font-size: .813rem;
     --smaller-font-size: .75rem;
 
     --font-medium: 500;
     --font-semi-bold: 600;
+
+    --big-padding: 2rem;
 
     --body-font: Poppins, sans-serif;
 }
