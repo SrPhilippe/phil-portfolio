@@ -1,10 +1,20 @@
 /* ------------------------------------------------ */
 @import "reset-n-var.css";
 
+::-webkit-scrollbar {
+    background-color: var(--darker-color);
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-dark-color);
+    border-radius: 15px;
+}
+
 
 body {
     font: var(--normal-font-size) var(--body-font);
-    background-color: var(--secondary-dark-color);
+    background-color: var(--darker-color);
 }
 
 a {
@@ -15,15 +25,28 @@ a {
 
 /* Header ----------------------------------------- */
 
+.header {
+    background-color: var(--dark-color);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .1);
+}
 
 .header .logo {
     transition: .3s;
     cursor: pointer;
     width: 6.5rem;
+    padding: var(--big-padding) 0;
 }
 
+.header .logo img {
+    transition: filter .3s;
+}
+
+.header .logo:hover {
+    animation: float 1.8s ease-in-out infinite;
+}
+
+
 .header > .container {
-    padding: var(--big-padding);
 }
 .header > .container > .wrapper {
     display: flex;
@@ -118,6 +141,20 @@ a {
     filter: blur(3px);
 } */
 
+
+
+/* Animations ------------------------------------- */
+
+@keyframes float {
+    0% { transform: translateY(0) }
+    40% { transform: translateY(-10px) }
+    60% { transform: translateY(-4px) }
+    68% { transform: translateY(0) }
+    80% { transform: translateY(-3px) }
+    100% {transform: translateY(0) }
+}
+
+/* Media queries ---------------------------------- */
 
 @media screen and (max-width:1024px) {
 }

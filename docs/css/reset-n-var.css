@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 :root {
-    --primary-color: #2185BA;
-    --secondary-color: #156087;
-    --primary-dark-color: #1B4A63;
-    --secondary-dark-color: #0C2F41;
+    --primary-color: hsl(201, 70%, 43%);
+    --secondary-color: hsl(201, 73%, 31%);
+    --primary-dark-color: hsl(201, 57%, 25%);
+    --secondary-dark-color: hsl(200, 69%, 15%);
+    --dark-color: #222;
+    --darker-color: #1C1C1C;
 
     --light-text-color: #FAFAFA;
 
@@ -27,7 +29,6 @@
 html {
     scroll-behavior: smooth;
 }
-
 
 * {
     margin: 0;
