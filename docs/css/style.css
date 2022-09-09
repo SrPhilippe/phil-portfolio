@@ -1,5 +1,22 @@
 /* ------------------------------------------------ */
 @import "reset-n-var.css";
+@import "animations.css";
+
+.disabled {
+    opacity: 0.3;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+.disabled * {
+    cursor: progress;
+}
+
+::selection {
+    background-color: var(--primary-hl-color);
+    color: var(--darker-color);
+}
 
 ::-webkit-scrollbar {
     background-color: var(--darker-color);
@@ -15,10 +32,39 @@
 body {
     font: var(--normal-font-size) var(--body-font);
     background-color: var(--darker-color);
+    min-height: 100vh;
+    height: 100%;
 }
 
 a {
     text-decoration: none;
+}
+
+/* 😎 Padronização de todos os links, sendo excluídos links em menus 😎 */
+*:not(li)>a {
+    color: var(--primary-hl-color);
+    /* transition: box-shadow .3s; */
+    transition: all .3s ease;
+    position: relative;
+}
+
+*:not(li)>a:hover {
+    box-shadow: inset 0 -.35rem var(--primary-color);
+}
+
+*:not(li)>a:hover:after {
+    width: 100%;
+}
+
+*:not(li)>a:after {
+    content: "";
+    transition: width 1s ease;
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-hl-color);
 }
 
 
@@ -46,9 +92,7 @@ a {
 }
 
 
-.header > .container {
-}
-.header > .container > .wrapper {
+.header>.container>.wrapper {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -68,21 +112,21 @@ a {
     user-select: none;
 }
 
-.header .menu > ul {
+.header .menu>ul {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
 }
 
-.header .menu > ul > li:hover >a,
-.header .menu > ul > li:hover >:after {
+.header .menu>ul>li:hover>a,
+.header .menu>ul>li:hover>:after {
     color: var(--primary-color);
     border-top-color: var(--primary-color);
 }
 
-.header .menu > ul > li > a {
+.header .menu>ul>li>a {
     transition: color .3s ease-out;
-    color: var(--light-text-color);
+    color: var(--light-white-color);
     display: flex;
     height: 100%;
     align-items: center;
@@ -91,35 +135,38 @@ a {
 
 /* Submenu -------------------- */
 
-/* Row icon submenu ----------- */
-.header .menu ul > li:has(ul) >a:after {
+
+.header .menu ul>li:has(ul)>a:after {
+    /* row icon */
     content: "";
     transform: scale(.8);
     border-left: .35rem solid transparent;
     border-right: .35rem solid transparent;
-    border-top: .5rem solid var(--light-text-color);
+    border-top: .5rem solid var(--light-white-color);
     transition: border-top-color .3s ease-out;
     margin-left: .4rem;
 }
 
-.header .menu ul > li:hover >ul {
+.header .menu ul>li:hover>ul {
     opacity: 1;
     visibility: visible;
+    margin-top: -3.8rem;
 }
 
-.header .menu ul > li > ul {
-    transition: opacity .4s ease-in-out;
+.header .menu ul>li>ul {
+    box-shadow: 2px 0 30px 3px rgba(0, 0, 0, .5);
+    transition: opacity, margin-top .4s ease-in-out;
     opacity: 0;
     display: flex;
     visibility: hidden;
-    flex-direction: column; 
+    flex-direction: column;
     position: absolute;
     background-color: white;
     max-width: 25vw;
     min-width: 10vw;
 }
 
-.header .menu ul > li > ul li > a {
+.header .menu ul>li>ul li>a {
     display: block;
     transition: padding-left .3s;
     color: var(--primary-dark-color);
@@ -127,11 +174,11 @@ a {
     padding: .5rem .85rem;
 }
 
-.header .menu ul > li > ul li:not(:last-child) {
+.header .menu ul>li>ul li:not(:last-child) {
     box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, .3);
 }
 
-.header .menu ul > li > ul li > a:hover {
+.header .menu ul>li>ul li>a:hover {
     color: var(--primary-color);
     padding-left: 1.25rem;
 }
@@ -142,23 +189,39 @@ a {
 } */
 
 
+/* ++Footer ------------------------------------------------ */
 
-/* Animations ------------------------------------- */
-
-@keyframes float {
-    0% { transform: translateY(0) }
-    40% { transform: translateY(-10px) }
-    60% { transform: translateY(-4px) }
-    68% { transform: translateY(0) }
-    80% { transform: translateY(-3px) }
-    100% {transform: translateY(0) }
+#footer {
+    background-color: #000;
 }
 
-/* Media queries ---------------------------------- */
-
-@media screen and (max-width:1024px) {
+.footer>.container:first-child {
+    padding: var(--big-padding) .5rem;
 }
 
+.footer .wrapper:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.footer .wrapper .logo {
+    width: 10rem;
+}
+
+.footer .wrapper>.phrase {
+    max-width: 35%;
+    color: var(--light-grey-color);
+    text-align: justify;
+    margin-left: 1.25rem;
+}
+
+/* ++Media queries ---------------------------------- */
+
+/* Rule to devices <= 1024 pixels wide */
+@media screen and (max-width:1024px) {}
+
+
+/* Rule to devices <= 768 pixels wide */
 @media screen and (max-width: 768px) {
 
     .header .logo {
@@ -166,7 +229,7 @@ a {
         margin-bottom: 1.3rem;
     }
 
-    .header > .container > .wrapper {
+    .header>.container>.wrapper {
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: initial;
@@ -177,26 +240,54 @@ a {
         width: 100%;
     }
 
-    .header .menu > ul {
+    .header .menu>ul {
         flex-direction: column;
     }
 
-    .header .menu > ul > li {
-        background-color:rgba(0, 0, 0, .3);
+    .header .menu>ul>li {
+        background-color: rgba(0, 0, 0, .3);
         margin: .15rem 0;
         border-radius: 5px;
     }
 
-    .header .menu > ul > li > a {
+    .header .menu>ul>li>a {
         height: auto;
         display: flex;
         justify-content: center;
         padding: .8rem .5rem;
     }
 
+
     /* submenu */
 
-    .header .menu ul > li > ul {
-        max-width: 100%;
+    .header .menu ul>li:has(ul) {
+        position: relative;
     }
-}   
+
+    .header .menu ul>li:hover>ul {
+        margin-top: initial;
+        visibility: hidden;
+        opacity: initial;
+    }
+
+    .header .menu ul>li>ul {
+        box-shadow: initial;
+        z-index: var(--z-index-popup);
+        max-width: initial;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        left: 0;
+        top: 0;
+    }
+
+    .header .menu ul>li>ul li>a {
+        padding: 1rem 5rem;
+        text-align: center;
+    }
+
+    .header .menu ul>li>ul li>a:hover {
+        padding-left: 4rem;
+    }
+
+}
