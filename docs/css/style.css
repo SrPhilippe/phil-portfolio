@@ -9,10 +9,6 @@
     cursor: default;
 }
 
-.disabled * {
-    cursor: progress;
-}
-
 ::selection {
     background-color: var(--primary-hl-color);
     color: var(--darker-color);
@@ -43,8 +39,8 @@ a {
 /* 😎 Padronização de todos os links, sendo excluídos links em menus 😎 */
 *:not(li)>a {
     color: var(--primary-hl-color);
-    /* transition: box-shadow .3s; */
-    transition: all .3s ease;
+    transition-property: box-shadow;
+    transition: .3s ease;
     position: relative;
 }
 
@@ -68,16 +64,34 @@ a {
 }
 
 
+.scroll-top {}
 
-/* Header ----------------------------------------- */
+
+/* ++Header ----------------------------------------- */
 
 .header {
     background-color: var(--dark-color);
     box-shadow: 0 1px 0 rgba(255, 255, 255, .1);
 }
 
+.header.sticky {
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.header.sticky .logo {
+    padding: .5rem;
+    width: 4rem;
+}
+
+.header.sticky .menu ul>li>ul {
+    margin-top: 0 !important;
+}
+
 .header .logo {
-    transition: .3s;
     cursor: pointer;
     width: 6.5rem;
     padding: var(--big-padding) 0;
@@ -88,7 +102,7 @@ a {
 }
 
 .header .logo:hover {
-    animation: float 1.8s ease-in-out infinite;
+    animation: float 1.8s ease-in-out infinite alternate;
 }
 
 
@@ -98,14 +112,14 @@ a {
     flex-wrap: wrap;
 }
 
-/* All menus -------------------------------------- */
+/* ++All menus -------------------------------------- */
 
 .menu ul {
     list-style: none;
     text-transform: uppercase;
 }
 
-/* Main menu -------------------------------------- */
+/* ++Main menu -------------------------------------- */
 
 .header .menu {
     -webkit-user-select: none;
@@ -133,7 +147,7 @@ a {
     padding: 0 0.5rem;
 }
 
-/* Submenu -------------------- */
+/* ++Submenu -------------------- */
 
 
 .header .menu ul>li:has(ul)>a:after {
