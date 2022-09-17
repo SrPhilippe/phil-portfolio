@@ -303,7 +303,7 @@ i.bx {
 /* ++Footer --------------------------------------- */
 
 #footer {
-    background-color: #000;
+    background-color: var(--secondary-darker-color);
 }
 
 .footer>.container {
@@ -322,11 +322,16 @@ i.bx {
     width: 10rem;
 }
 
-.footer .wrapper>.phrase {
+.footer .wrapper .phrase {
     max-width: 35%;
     color: var(--light-grey-color);
     /* text-align: justify; */
     margin-left: 1.25rem;
+}
+
+.footer .wrapper .author {
+    font-size: var(--small-font-size);
+    font-style: italic;
 }
 
 .footer .wrapper:last-child {
@@ -336,7 +341,17 @@ i.bx {
 
 .footer .wrapper ul {
     list-style: none;
+    font-size: var(--small-font-size);
 }
+
+.footer .wrapper ul li a {
+    line-height: 1.5;
+}
+
+.footer .links {
+    display: flex;
+}
+
 
 .footer .ribbon {
     font-size: var(--small-font-size);
