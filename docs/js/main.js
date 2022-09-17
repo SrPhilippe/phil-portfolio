@@ -1,4 +1,5 @@
-const $navbar = document.querySelector('nav.menu ul:first-child'),
+const $navbar = document.querySelector('nav.menu'),
+	$navUl = $navbar.firstElementChild,
 	$header = document.querySelector('header')
 
 let scrollvalue = window.scrollY,
@@ -7,11 +8,11 @@ let scrollvalue = window.scrollY,
 	sticky = null,
 	ticking = false
 
-// To define the initial state of the scroll
-scrollvalue >= headerheight ? (sticky = true) : (sticky = false)
-window.addEventListener('load', menuSticky())
-
-console.log(sticky)
+if (devicewidth < 768) {
+	if (document.querySelector('.menu.mobile') === null) {
+		showNavigation()
+	}
+}
 
 function menuSticky() {
 	if (!ticking) {
@@ -33,7 +34,38 @@ function menuSticky() {
 	}
 }
 
-window.addEventListener('scroll', (event) => {
+function showNavigation() {
+	const $mobNav = document.createElement('div')
+
+	$mobNav.classList.add('menu', 'mobile')
+	for (let i = 0; i < 3; i++) {
+		let el = document.createElement('span')
+		$mobNav.append(el)
+	}
+	$navbar.prepend($mobNav)
+}
+
+function correctElDetails() {
+	const $el = document.querySelector('.sc.intro .mask')
+	$el.style.borderRightWidth = `${$el.parentNode.offsetWidth}px`
+	$el.style.borderTopWidth = `${$el.parentNode.offsetHeight}px`
+}
+
+window.addEventListener('load', () => {
+	scrollvalue >= headerheight ? (sticky = true) : (sticky = false)
+	console.log(scrollvalue)
+	menuSticky()
+	correctElDetails()
+})
+
+window.addEventListener('scroll', (ev) => {
 	scrollvalue = window.scrollY
-    menuSticky()
+	menuSticky()
+})
+
+window.addEventListener('resize', (ev) => {
+	if (window.innerWidth < 768) {
+	}
+
+	correctElDetails()
 })

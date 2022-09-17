@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <title>Phil - Home</title>
 </head>
 
 <body>
     <header id="header" class="header">
-        <div class="container">
+        <div class="container"> 
             <div class="wrapper">
                 <div class="logo">
                     <img src="img/phil-logo-minimalist.png" alt="Phil logo">
+                    <span>:)</span>
                 </div>
                 <nav class="menu">
                     <ul>
@@ -25,15 +27,12 @@
                             </ul>
                         </li>
                         <li><a href="#">Entrar em contato</a></li>
-                        <li><a href="#">@ Find-me</a>
+                        <li><a href="#"><i class="bx bx-user-pin"></i>Redes</a>
                             <ul class="submenu">
-                                <li><a href="https://twitter.com/elpelippe" target="_blank" rel="noopener">Twitter</a>
-                                </li>
-                                <li><a href="https://instagram.com/elpelippe" target="_blank"
-                                        rel="noopener">Instagram</a></li>
-                                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener">Github</a>
-                                </li>
-                                <li><a href="mailto:philippehenrique@outlook.com">E-mail</a></li>
+                                <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank" rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
+                                <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i class="bx bxl-instagram-alt"></i> Instagram</a></li>
+                                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Github</a>
+                                </li><li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Sobre</a></li>
@@ -42,20 +41,22 @@
             </div>
         </div>
     </header>
-    <main>
-
-        <section class="about"
-            style="margin-bottom: 30rem; padding: var(--big-padding); color: var(--light-white-color); text-align: justify;">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores fugiat, earum <a href="#">clique
-                    aqui</a> accusantium dolorem eaque itaque. In, maxime molestias alias ullam cum officiis esse sunt
-                minima ab explicabo, <a href="#">aspernatur at consequatur officia</a>, porro quia doloremque ratione
-                necessitatibus magni perspiciatis! Maxime, cupiditate inventore asperiores eaque corporis commodi rerum
-                in. Obcaecati deserunt quasi officia veritatis asperiores provident, quisquam quidem rerum fugit placeat
-                quam voluptates voluptate commodi necessitatibus, aliquam cumque fugiat incidunt. Minima libero laborum
-                ipsum quidem nesciunt natus perferendis delectus, nam accusantium voluptate eum itaque officia earum,
-                ratione expedita! Odit magnam eum dolor non assumenda, reiciendis possimus, quia nihil cum officia natus
-                quo!
-        </section>
+    <main id="main" class="main">
+        <section class="slider"></section>
+        <section class="sc intro">
+            <div class="container">
+                <div class="content left">
+                    <h1>Bem-vindo!</h1>
+                    <p>Olá, meu nome é Philippe e aqui vou te apresentar um pouco do meu trabalho. Caso queira ler sobre o meu projeto <a href="#sobre">clique aqui</a>.</p>
+                    <p>Continue deslizando a página para obter mais informações como: Serviços já feitos, formulário para contato e orçamentos, aplicações, etc...</p>
+                </div>
+                <div class="content right">
+                    <img src="./img/hello-animate.svg" alt="">
+                </div>
+            </div>
+            <div class="mask"></div>
+        </section> 
+        
     </main>
 
     <footer id="footer" class="footer">
@@ -65,11 +66,28 @@
                     <img src="img/phil-logo-footer.png" alt="Phil logo footer">
                 </div>
                 <div class="phrase">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quae tempora non, accusantium sit
-                        maxime vero necessitatibus vel ea fugiat?</p>
+                    <p>A Mile thousand journey begins with a single step.</p>
                 </div>
             </div>
             <div class="wrapper">
+                <h2>Links</h2>
+                <div class="links">
+                    <ul>
+                        <li><a href="https://storyset.com/people" target="_blank" rel="noopener">People illustrations by Storyset</a></li>
+                        <li><a href="#">Lorem, ipsum dolor.</a></li>
+                        <li><a href="#">Lorem, ipsum dolor.</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ribbon">
+            <div class="container">
+                <div class="content">
+                    <p>Copyright <i class="bx bx-copyright"></i> <span>2022</span> - <span>Todos os direitos reservados.</span></p>
+                </div>
+                <div class="content">
+                    <p>Desenvolvido por <a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener">Philippe H Silva <i class="bx bxl-github"></i></a></p>
+                </div>
             </div>
         </div>
     </footer>
