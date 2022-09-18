@@ -19,8 +19,7 @@ function menuSticky() {
 		window.requestAnimationFrame(() => {
 			if (scrollvalue >= headerheight && sticky === true) {
 				$header.classList.add('sticky')
-				document.body.style.paddingTop =
-					headerheight + $header.offsetHeight + 'px'
+				document.body.style.paddingTop = headerheight + $header.offsetHeight + 'px'
 				sticky = false
 			} else if (scrollvalue < headerheight && sticky === false) {
 				$header.classList.remove('sticky')
