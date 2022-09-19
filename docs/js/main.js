@@ -1,6 +1,9 @@
+import { apiKeys, mailPrefs } from './config.js'
+
 const $navbar = document.querySelector('nav.menu'),
-	$navUl = $navbar.firstElementChild,
-	$header = document.querySelector('header')
+	$header = document.querySelector('header'),
+	$form = document.querySelector('.contact-form')
+
 
 let scrollvalue = window.scrollY,
 	devicewidth = window.innerWidth,
@@ -19,7 +22,8 @@ function menuSticky() {
 		window.requestAnimationFrame(() => {
 			if (scrollvalue >= headerheight && sticky === true) {
 				$header.classList.add('sticky')
-				document.body.style.paddingTop = headerheight + $header.offsetHeight + 'px'
+				document.body.style.paddingTop =
+					headerheight + $header.offsetHeight + 'px'
 				sticky = false
 			} else if (scrollvalue < headerheight && sticky === false) {
 				$header.classList.remove('sticky')
@@ -52,7 +56,7 @@ function correctElDetails() {
 
 window.addEventListener('load', () => {
 	scrollvalue >= headerheight ? (sticky = true) : (sticky = false)
-	console.log(scrollvalue)
+	console.log(`Initial scroll offset: ${Math.floor(scrollvalue)}px`)
 	menuSticky()
 	correctElDetails()
 })
@@ -68,3 +72,33 @@ window.addEventListener('resize', (ev) => {
 
 	correctElDetails()
 })
+
+// Select all inputs inside the contact form excluding the input submit type
+$form.querySelectorAll('input:not([type="submit"], [type="hidden"]), textarea').forEach(el => {
+	console.log(el)
+	el.addEventListener('keydown', (e) => {
+		e.currentTarget.value.length > 0 ? (e.currentTarget.classList.add('active')) : (e.currentTarget.classList.remove('active'))
+	})
+})
+
+emailjs.init(apiKeys.public.emailjs)
+
+$form.addEventListener('submit', (ev) => {
+	ev.preventDefault()
+
+	// Generate five digits number to be used as message ID
+	// ev.target.id_number.value = Math.random() * 100000 | 0
+	// ev.target.to_name.value = "Philippe"
+
+	// emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target)
+	// .then(() => {
+	// 	console.log('Email successfully sended!')
+	// }), error => {
+	// 	console.log('Failed...', error)
+	// }
+
+
+})
+
+function sendMail() {
+}

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="dark">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <title>Phil - Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+<title>Phil - Home</title>
 </head>
 
 <body>
     <header id="header" class="header">
-        <div class="container"> 
+        <div class="container">
             <div class="wrapper">
                 <div class="logo">
                     <img src="img/phil-logo-minimalist.png" alt="Phil logo">
@@ -31,8 +31,8 @@
                             <ul class="submenu">
                                 <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank" rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
                                 <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i class="bx bxl-instagram-alt"></i> Instagram</a></li>
-                                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Github</a>
-                                </li><li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
+                                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Github</a></li>
+                                <li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Sobre</a></li>
@@ -47,16 +47,51 @@
             <div class="container">
                 <div class="content left">
                     <h1>Bem-vindo!</h1>
-                    <p>Olá, meu nome é Philippe e aqui vou te apresentar um pouco do meu trabalho. Caso queira ler sobre o meu projeto <a href="#sobre">clique aqui</a>.</p>
-                    <p>Continue deslizando a página para obter mais informações como: Serviços já feitos, formulário para contato e orçamentos, aplicações, etc...</p>
+                    <p>Olá, meu nome é Philippe e aqui vou te apresentar um pouco do meu trabalho. Caso queira ler sobre
+                        o meu projeto <a href="#sobre">clique aqui</a>.</p>
+                    <p>Continue deslizando a página para obter mais informações como: Serviços já feitos, formulário
+                        para contato e orçamentos, aplicações, etc...</p>
                 </div>
                 <div class="content right">
                     <img src="./img/hello-animate.svg" alt="Introduction Hello">
                 </div>
             </div>
             <div class="mask"></div>
-        </section> 
-        
+        </section>
+        <section class="sc contact">
+            <div class="container">
+                <div class="content left">
+                    <form class="contact-form" method="POST">
+                        <ul>
+                            <li>
+                                <input type="hidden" name="to_name">
+                                <input type="hidden" name="id_number">
+                            </li>
+                            <li>
+                                <label for="username">Nome</label>
+                                <input type="text" name="username" placeholder="Primeiro nome">
+                            </li>
+                            <li>
+                                <label for="userEmail">Email</label>
+                                <input type="email" name="userEmail" placeholder="exemplo@email.com">
+                            </li>
+                            <li>
+                                <label for="message">Mensagem</label>
+                                <textarea name="message" minlength="10" maxlength="800" placeholder="Digite sua mensagem..."></textarea>
+                            </li>
+                            <li>
+                                <input type="submit" value="Enviar">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="content right">
+                    <h1>Contato</h1>
+                    <p>Para solicitar orçamento ou qualquer outro tipo de contato como: dúvidas, sugestões, elogios, etc, basta preencher o formulário ao lado.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer id="footer" class="footer">
@@ -66,19 +101,21 @@
                     <img src="img/phil-logo-footer.png" alt="Phil logo footer">
                 </div>
                 <div class="phrase">
-                    <p><i class="bx bxs-quote-alt-left bx-md"></i> The journey of a thousand miles begins with a single step. <i class="bx bxs-quote-alt-right bx-md"></i></p>
+                    <p><i class="bx bxs-quote-alt-left bx-md"></i> The journey of a thousand miles begins with a single
+                        step. <i class="bx bxs-quote-alt-right bx-md"></i></p>
                     <p class="author">Lao Tzu (老子)</p>
                 </div>
             </div>
             <div class="wrapper">
                 <div>
                     <h2>title example</h2>
-                    
+
                 </div>
                 <div class="links">
                     <h2>Links</h2>
                     <ul>
-                        <li><a href="https://storyset.com/people" target="_blank" rel="noopener">People illustrations by Storyset</a></li>
+                        <li><a href="https://storyset.com/people" target="_blank" rel="noopener">People illustrations by
+                                Storyset</a></li>
                         <li><a href="#">Channel</a></li>
                         <li><a href="#">Blog</a></li>
                     </ul>
@@ -88,18 +125,23 @@
         <div class="ribbon">
             <div class="container">
                 <div class="content">
-                    <p>Copyright <i class="bx bx-copyright"></i> Phil <script>document.write(new Date().getFullYear())</script> - Todos os direitos reservados.</p>
+                    <p>Copyright <i class="bx bx-copyright"></i> Phil
+                        <script async>document.write(new Date().getFullYear())</script> - Todos os direitos reservados.
+                    </p>
                 </div>
                 <div class="content">
-                    <p>Desenvolvido por <a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener">Philippe H Silva <i class="bx bxl-github"></i></a></p>
+                    <p>Desenvolvido por <a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener">Philippe
+                            H Silva <i class="bx bxl-github"></i></a></p>
                 </div>
             </div>
         </div>
     </footer>
 </body>
 
+<!-- Emailjs -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <!-- Main script -->
-<script src="js/main.js"></script>
+<script src="js/main.js" defer type="module"></script>
 
 </html>
