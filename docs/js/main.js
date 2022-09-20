@@ -102,6 +102,3 @@ $form.addEventListener('submit', (ev) => {
 
 
 })
-
-function sendMail() {
-}
