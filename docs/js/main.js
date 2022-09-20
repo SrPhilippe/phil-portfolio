@@ -1,4 +1,5 @@
 import { apiKeys, mailPrefs } from './config.js'
+import FormValidator from './formValidator.js'
 
 const $navbar = document.querySelector('nav.menu'),
 	$header = document.querySelector('header'),
