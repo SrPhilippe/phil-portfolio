@@ -2,8 +2,7 @@ import { apiKeys, mailPrefs } from './config.js'
 
 const $navbar = document.querySelector('nav.menu'),
 	$header = document.querySelector('header'),
-	$form = document.querySelector('.contact-form'),
-	test = null
+	$form = document.querySelector('.contact-form')
 
 
 let scrollvalue = window.scrollY,
@@ -86,17 +85,32 @@ emailjs.init(apiKeys.public.emailjs)
 
 $form.addEventListener('submit', (ev) => {
 	ev.preventDefault()
+	const $loading = document.querySelector('.sc.contact .popup')
+	const $info = $loading.querySelector('.info')
+	const $ring = $loading.querySelector('.lds-ring')
+
+	
+	$ring.style.display = 'inline-block'
+	$info.textContent = `Enviando`
+	$loading.style.visibility = 'visible'
+	
+	// just a small delay to let the css transition happen
+	window.setTimeout(() => $loading.style.opacity = 1, 30) 
 
 	// Generate five digits number to be used as message ID
 	ev.target.id_number.value = Math.random() * 100000 | 0
 	ev.target.to_name.value = "Philippe"
-
 	emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target)
 	.then(() => {
-		console.log('Email successfully sended!')
+		// clearForm()
+		$ring.style.display = 'none'
+		$info.textContent = `Sua mensagem foi enviada!`
+		window.setTimeout(() => {
+			$loading.style.opacity = 0
+			window.setTimeout(() => $loading.style.visibility = 'hidden', 300)
+		}, 2000)
 	}), error => {
 		console.log('Failed...', error)
 	}
-
 
 })
