@@ -57,7 +57,6 @@ function correctElDetails() {
 
 window.addEventListener('load', () => {
 	scrollvalue >= headerheight ? (sticky = true) : (sticky = false)
-	console.log(`Initial scroll offset: ${Math.floor(scrollvalue)}px`)
 	menuSticky()
 	correctElDetails()
 })

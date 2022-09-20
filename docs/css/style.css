@@ -436,6 +436,7 @@ i.bx {
 .contact-form input:focus-visible,
 .contact-form textarea:focus-visible {
     outline: 2px solid var(--primary-hl-color);
+    border-radius: 30px;
 }
 
 .contact-form input::placeholder,
