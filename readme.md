@@ -4,4 +4,4 @@ This is the repo of my personal website. Since it's a very simple project, I use
 
 [Go to website >>](https://srphilippe.github.io/phil-portfolio/)
 
-
+[![preview image](preview.png)](https://srphilippe.github.io/phil-portfolio/)
