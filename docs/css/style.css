@@ -306,7 +306,8 @@ i.bx {
 /* Form ------------------------------------------- */
 
 .sc.contact {
-    padding: calc(var(--big-padding) + 1.5rem) 0;
+    overflow: hidden;
+    padding: var(--big-padding);
     background-color: black;
 }
 
@@ -333,8 +334,6 @@ i.bx {
     align-items: center;
 }
 
-.contact-form {}
-
 .contact-form ul {
     list-style: none;
 }
@@ -344,20 +343,15 @@ i.bx {
 }
 
 .contact-form li {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     position: relative;
+    display: flex;
 }
 .contact-form li:not(:last-child) {
     margin-bottom: 1.35rem;
 }
 
-.contact-form input {
-    font-size: 1.3rem;
-}
-
 .contact-form label {
+    transition: all .3s ease;
     font-weight: bold;
     text-align: center;
     width: 40%;
@@ -369,25 +363,40 @@ i.bx {
     color: var(--secondary-dark-color);
 }
 
+.contact-form label.active {
+    transform: translate(151%);
+    margin-top: -1rem;
+    font-weight: normal;
+    border-radius: 30px 30px 0 30px;
+    font-size: var(--small-font-size);
+    background-color: var(--secondary-dark-color);
+    border: 1px solid var(--primary-hl-color);
+    color: var(--primary-hl-color);
+    padding: .3rem .8rem;
+}
+
 .contact-form textarea {
     font-size: 1rem;
 }
 
+.contact-form li:not([type="hidden"]) {
+    border-radius: 30px;
+    box-shadow:0 1px 150px hsla(201, 70%, 63%, .5);
+}
+
 .contact-form input,
 .contact-form textarea {
+    border-radius: 30px;
+    background-color: var(--dark-color);
+    box-shadow: inset 0 1px var(--primary-hl-color);
+    font-size: 1.3rem;
     color: var(--light-grey-color);
     border: none;
-    border-radius: 30px;
     appearance: none;
     width: 100%;
     resize: none;
     padding: 0.8rem 1.35rem;
     font-family: var(--body-font);
-}
-
-.contact-form input:not([type="submit"]),
-.contact-form textarea {
-    /* Something */
 }
 
 .contact-form input:focus-visible,
@@ -402,16 +411,28 @@ i.bx {
     text-align: end;
 }
 
+.contact-form input:placeholder-shown,
+.contact-form textarea:placeholder-shown {
+    text-align: end;
+}
+
 .contact-form input.active,
 .contact-form textarea.active {
     outline: 2px solid var(--primary-hl-color);
+    color: var(--primary-hl-color);
+    border-radius: 30px 0 30px 30px;
 }
 
 .contact-form textarea {
     min-height: 10rem;
 }
 
+.contact-form textarea {
+    padding-top: 1.3rem;
+}
+
 .contact-form input[type="submit"] {
+    border-radius: 30px;
     transition: .2s ease;
     transition-property: box-shadow, transform;
     cursor: pointer;
@@ -582,6 +603,14 @@ i.bx {
 
     .sc.intro .content.right {
         display: none;
+    }
+
+    .sc.contact .container {
+        flex-direction: column;
+    }
+
+    .sc.contact .container .content.left {
+        order: 1;
     }
 
     .footer .container {

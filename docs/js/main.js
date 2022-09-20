@@ -2,7 +2,8 @@ import { apiKeys, mailPrefs } from './config.js'
 
 const $navbar = document.querySelector('nav.menu'),
 	$header = document.querySelector('header'),
-	$form = document.querySelector('.contact-form')
+	$form = document.querySelector('.contact-form'),
+	test = null
 
 
 let scrollvalue = window.scrollY,
@@ -75,9 +76,11 @@ window.addEventListener('resize', (ev) => {
 
 // Select all inputs inside the contact form excluding the input submit type
 $form.querySelectorAll('input:not([type="submit"], [type="hidden"]), textarea').forEach(el => {
-	console.log(el)
-	el.addEventListener('keydown', (e) => {
-		e.currentTarget.value.length > 0 ? (e.currentTarget.classList.add('active')) : (e.currentTarget.classList.remove('active'))
+	el.addEventListener('input', (e) => {
+		console.log(`Fired at ${el.tagName}`)
+		e.currentTarget.value.length > 0
+			? (e.currentTarget.classList.add('active'), e.currentTarget.previousElementSibling.classList.add('active'))
+			: (e.currentTarget.classList.remove('active'), e.currentTarget.previousElementSibling.classList.remove('active'))
 	})
 })
 
@@ -87,15 +90,15 @@ $form.addEventListener('submit', (ev) => {
 	ev.preventDefault()
 
 	// Generate five digits number to be used as message ID
-	// ev.target.id_number.value = Math.random() * 100000 | 0
-	// ev.target.to_name.value = "Philippe"
+	ev.target.id_number.value = Math.random() * 100000 | 0
+	ev.target.to_name.value = "Philippe"
 
-	// emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target)
-	// .then(() => {
-	// 	console.log('Email successfully sended!')
-	// }), error => {
-	// 	console.log('Failed...', error)
-	// }
+	emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target)
+	.then(() => {
+		console.log('Email successfully sended!')
+	}), error => {
+		console.log('Failed...', error)
+	}
 
 
 })
