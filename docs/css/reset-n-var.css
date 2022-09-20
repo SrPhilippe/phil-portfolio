@@ -5,6 +5,7 @@
     color-scheme: dark;
 
     --z-index-popup: 10;
+    --z-index-menu: 5;
 
     --primary-color: hsl(201, 70%, 43%);
     --primary-hl-color: hsl(201, 70%, 63%);
