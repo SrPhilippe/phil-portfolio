@@ -75,10 +75,10 @@ window.addEventListener('resize', (ev) => {
 
 // Select all inputs inside the contact form excluding the input submit type
 $form.querySelectorAll('input:not([type="submit"], [type="hidden"]), textarea').forEach(el => {
-	el.addEventListener('input', (e) => {
-		e.currentTarget.value.length > 0
-			? (e.currentTarget.classList.add('active'), e.currentTarget.previousElementSibling.classList.add('active'))
-			: (e.currentTarget.classList.remove('active'), e.currentTarget.previousElementSibling.classList.remove('active'))
+	el.addEventListener('input', ev => {
+		ev.currentTarget.value.length > 0
+			? (ev.currentTarget.classList.add('active'), ev.currentTarget.previousElementSibling.classList.add('active'))
+			: (ev.currentTarget.classList.remove('active'), ev.currentTarget.previousElementSibling.classList.remove('active'))
 	})
 })
 

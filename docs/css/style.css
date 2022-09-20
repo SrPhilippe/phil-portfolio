@@ -435,8 +435,8 @@ i.bx {
 
 .contact-form input:focus-visible,
 .contact-form textarea:focus-visible {
-    outline: 2px solid var(--primary-hl-color);
-    border-radius: 30px;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-hl-color)
 }
 
 .contact-form input::placeholder,
@@ -453,7 +453,7 @@ i.bx {
 
 .contact-form input.active,
 .contact-form textarea.active {
-    outline: 2px solid var(--primary-hl-color);
+    box-shadow: 0 0 0 2px var(--primary-hl-color);
     color: var(--primary-hl-color);
     border-radius: 30px 0 30px 30px;
 }
