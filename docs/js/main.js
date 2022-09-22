@@ -27,7 +27,7 @@ window.addEventListener('scroll', ev => {
 	scrollvalue = window.scrollY
 	menuSticky()
 
-	scrollvalue > headerheight ? show($scrollTop, null) : hide($scrollTop, null)
+	scrollvalue > headerheight ? show($scrollTop) : hide($scrollTop, null)
 })
 
 window.addEventListener('resize', ev => {
@@ -88,8 +88,6 @@ emailjs.init(apiKeys.public.emailjs)
 
 $form.addEventListener('submit', ev => {
 	ev.preventDefault()
-
-	
 
 	const $loading = document.querySelector('.sc.contact .popup')
 	const $info = $loading.querySelector('.info')
