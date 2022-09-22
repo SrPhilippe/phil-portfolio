@@ -29,14 +29,10 @@
                         <li><a href="#">Entrar em contato</a></li>
                         <li><a href="#"><i class="bx bx-user-pin"></i>Redes</a>
                             <ul class="submenu">
-                                <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank"
-                                        rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
-                                <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i
-                                            class="bx bxl-instagram-alt"></i> Instagram</a></li>
-                                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i
-                                            class="bx bxl-github"></i> Github</a></li>
-                                <li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i>
-                                        E-mail</a></li>
+                                <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank" rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
+                                <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i class="bx bxl-instagram-alt"></i> Instagram</a></li>
+                                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Github</a></li>
+                                <li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Sobre</a></li>
@@ -46,7 +42,7 @@
         </div>
     </header>
     <main id="main" class="main">
-        <section class="slider"></section>
+        <section class="sc slider"></section>
         <section class="sc intro">
             <div class="container">
                 <div class="content left">
@@ -84,16 +80,15 @@
                             </li>
                             <li>
                                 <label for="username">Nome</label>
-                                <input type="text" name="username" placeholder="Primeiro nome">
+                                <input type="text" name="username" placeholder="Primeiro nome" required>
                             </li>
                             <li>
                                 <label for="userEmail">Email</label>
-                                <input type="email" name="userEmail" placeholder="exemplo@host.com.br">
+                                <input type="email" name="userEmail" placeholder="exemplo@host.com.br" required>
                             </li>
                             <li>
                                 <label for="message">Mensagem</label>
-                                <textarea name="message" minlength="10" maxlength="800"
-                                    placeholder="Digite sua mensagem..."></textarea>
+                                <textarea name="message" minlength="10" maxlength="800" placeholder="Digite sua mensagem..." required></textarea>
                             </li>
                             <li>
                                 <input type="submit" value="Enviar">
@@ -167,6 +162,9 @@
                             H Silva <i class="bx bxl-github"></i></a></p>
                 </div>
             </div>
+        </div>
+        <div class="scroll-top">
+            <i class="bx bxs-chevron-up-circle"></i>
         </div>
     </footer>
 </body>
