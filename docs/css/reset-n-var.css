@@ -4,6 +4,7 @@
 :root {
     color-scheme: dark;
 
+    --z-index-tooltip: 15;
     --z-index-popup: 10;
     --z-index-menu: 5;
     --z-index-loading: 4;

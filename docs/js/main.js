@@ -36,16 +36,89 @@ window.addEventListener('resize', ev => {
 	}
 })
 
-// Select all inputs inside the contact form excluding the input submit type
-const inputsForm = $form.querySelectorAll('input:not([type="submit"], [type="hidden"]), textarea')
-inputsForm.forEach(el => {
-	el.addEventListener('input', ev => {
-		ev.currentTarget.value.length > 0
-			? (ev.currentTarget.classList.add('active'), ev.currentTarget.previousElementSibling.classList.add('active'))
-			: (ev.currentTarget.classList.remove('active'),
-			  ev.currentTarget.previousElementSibling.classList.remove('active'))
+const inputs = {
+	name: $form.querySelector('input[name="username"]'),
+	email: $form.querySelector('input[type="email"]'),
+	message: $form.querySelector('textarea'),
+}
+
+let nameValid = false,
+	emailValid = false,
+	messageValid = false
+
+for (const element in inputs) {
+	inputs[element].addEventListener('input', ev => {
+		let input = ev.currentTarget,
+			message = verifyInput(ev.currentTarget)
+		if (input.value.length > 0) {
+			input.classList.add('active')
+			input.previousElementSibling.classList.add('active')
+
+			if (!input.nextElementSibling) {
+				let $p = document.createElement('p')
+				$p.classList.add('log')
+				input.after($p)
+			}
+
+			if (message === true) {
+				input.classList.remove('invalid')
+				input.nextSibling.remove()
+			} else {
+				input.classList.add('invalid')
+				input.nextElementSibling.textContent = message
+				input.nextSibling.style.top = `-${(input.nextSibling.offsetHeight) + 5}px`
+			}
+		} else {
+			input.nextSibling.remove()
+			input.classList.remove('active')
+			input.previousElementSibling.classList.remove('active')
+			input.classList.remove('invalid')
+		}
 	})
-})
+}
+
+function verifyInput(input) {
+	const char = {
+		// min and max permited characters
+		name: {
+			min: 3,
+			max: 23,
+		},
+		message: {
+			min: 5,
+			max: 1000,
+		},
+	}
+	if (input.isSameNode(inputs.name)) {
+		if (input.value.length < char.name.min) {
+			nameValid = false
+			return `Nome muito pequeno. Precisa conter pelo menos ${char.name.min} caracteres.`
+		} else if (input.value.length > char.name.max) {
+			nameValid = false
+			return `Nome muito grande. Pode conter até ${char.name.max} caracteres.`
+		} else {
+			nameValid = true
+			return true
+		}
+	} else if (input.isSameNode(inputs.email)) {
+		const mailPatt = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/ // regular expression to match e-mail pattern
+		if (!input.value.match(mailPatt)) {
+			emailValid = false
+			return `O padrão de e-mail não é válido.`
+		} else {
+			emailValid = true
+			return true
+		}
+	} else if (input.isSameNode(inputs.message)) {
+		if (input.value.length < char.message.min || input.value.length > char.message.max) {
+			messageValid = false
+			return `A mensagem precisa estar entre ${char.message.min} e ${char.message.max} caracteres.`
+		} else {
+			messageValid = true
+			return true
+		}
+	}
+}
 
 function menuSticky() {
 	if (scrollvalue >= headerheight && sticky === true) {
@@ -89,30 +162,37 @@ emailjs.init(apiKeys.public.emailjs)
 $form.addEventListener('submit', ev => {
 	ev.preventDefault()
 
-	const $loading = document.querySelector('.sc.contact .popup')
-	const $info = $loading.querySelector('.info')
-	const $ring = $loading.querySelector('.lds-ring')
+	if (nameValid && emailValid && messageValid) {
+		const $loading = document.querySelector('.sc.contact .popup')
+		const $info = $loading.querySelector('.info')
+		const $ring = $loading.querySelector('.lds-ring')
 
-	$ring.style.display = 'inline-block'
-	$info.textContent = `Enviando`
-	show($loading)
+		$ring.style.display = 'inline-block'
+		$info.textContent = `Enviando`
+		show($loading)
 
-	// Generate five digits number to be used as message ID
-	ev.target.id_number.value = (Math.random() * 100000) | 0
-	ev.target.to_name.value = 'Philippe'
-	emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target).then(() => {
-		// clearForm()
-		$ring.style.display = 'none'
-		$info.textContent = `Sua mensagem foi enviada!`
-		window.setTimeout(() => {
-			hide($loading)
-		}, 2000)
-	}),
-		error => {
+		// Generate five digits number to be used as message ID
+		ev.target.id_number.value = (Math.random() * 100000) | 0
+		ev.target.to_name.value = 'Philippe'
+		emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target).then(() => {
+			$form.reset()
+			for (const el in inputs) {
+				inputs[el].classList.remove('active')
+			}
+			nameValid, emailValid, messageValid = false
 			$ring.style.display = 'none'
-			$info.textContent = `Houve um erro ao enviar a mensagem.`
-			console.log('Failed...', error)
-		}
+			$info.textContent = `Sua mensagem foi enviada!`
+			window.setTimeout(() => {
+				hide($loading)
+			}, 2000)
+		}),
+			error => {
+				$ring.style.display = 'none'
+				$info.textContent = `Houve um erro ao enviar a mensagem.`
+				console.log('Failed...', error)
+			}
+	} else {
+	}
 })
 
 function show(el) {
