@@ -135,17 +135,31 @@ i.bx {
 .header .logo span {
     font-weight: 600;
     font-size: 2rem;
-}
-
-.header.sticky span {
     font-size: 1.5rem;
 }
-
 
 .header>.container>.wrapper {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.header.clone {
+    top: 0;
+    width: 100vw;
+    position: fixed;
+    transition: all .4s ease, opacity .4s linear;
+    z-index: var(--z-index-menu);
+}
+
+.header.clone .logo {
+    transition: all .3s ease;
+    padding: .5rem;
+    width: 4rem;
+}
+
+.header.clone .menu ul>li>ul {
+    margin-top: 0 !important;
 }
 
 /* ++All menus -------------------------------------- */
@@ -358,6 +372,7 @@ i.bx {
 
 .sc.contact .content.left {
     flex-basis: 40%;
+    z-index: 4;
 }
 
 .sc.contact .content.right {

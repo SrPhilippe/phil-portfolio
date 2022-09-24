@@ -1,40 +1,41 @@
 import { apiKeys, mailPrefs } from './config.js'
-// import FormValidator from './formValidator.js'
 
-const $navbar = document.querySelector('nav.menu')
 const $header = document.querySelector('header')
+const $clonedHeader = document.querySelector('.header.clone')
+const $navbar = document.querySelector('nav.menu')
 const $form = document.querySelector('.contact-form')
+const $firstSection = document.querySelector('.sc.intro')
+const $scrollTop = document.querySelector('.scroll-top')
+const $menuItems = $navbar.querySelectorAll('ul>li')
 
-let scrollvalue = window.scrollY,
-	devicewidth = window.innerWidth,
-	headerheight = $header.offsetHeight,
-	sticky = null
-
-if (devicewidth < 768) {
-	if (document.querySelector('.menu.mobile') === null) {
-		showNavigation()
-	}
-}
+console.log($menuItems)
 
 window.addEventListener('load', ev => {
-	$header.style.top = `-${headerheight}px` // to have a slide down animation
-	scrollvalue >= headerheight ? (sticky = true) : (sticky = false)
-	menuSticky()
 	correctElDetails()
 })
 
-window.addEventListener('scroll', ev => {
-	scrollvalue = window.scrollY
-	menuSticky()
+emailjs.init(apiKeys.public.emailjs) // Inits the emailjs instance
+cloneHeader($header) // Clones the header of the page
 
-	scrollvalue > headerheight ? show($scrollTop) : hide($scrollTop, null)
-})
-
-window.addEventListener('resize', ev => {
-	correctElDetails()
-	if (window.innerWidth < 768) {
+const observer = new IntersectionObserver(entries => {
+	entries.forEach(entry => {
+		if (!entry.isIntersecting) {
+			$clonedHeader.style.top = '0'
+			$clonedHeader.style.opacity = '1'
+			show($scrollTop)
+		} else {
+			$clonedHeader.style.top = `-${$clonedHeader.offsetHeight}px`
+			$clonedHeader.style.opacity = '0'
+			hide($scrollTop, null)
+		}
+	})
+},
+	{
+		rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px`
 	}
-})
+)
+
+observer.observe($firstSection) // Observes the first section of the page
 
 const inputs = {
 	name: $form.querySelector('input[name="username"]'),
@@ -49,7 +50,7 @@ let nameValid = false,
 for (const element in inputs) {
 	inputs[element].addEventListener('input', ev => {
 		let input = ev.currentTarget,
-			message = verifyInput(ev.currentTarget)
+			message = checkInput(ev.currentTarget)
 		if (input.value.length > 0) {
 			input.classList.add('active')
 			input.previousElementSibling.classList.add('active')
@@ -66,7 +67,7 @@ for (const element in inputs) {
 			} else {
 				input.classList.add('invalid')
 				input.nextElementSibling.textContent = message
-				input.nextSibling.style.top = `-${(input.nextSibling.offsetHeight) + 5}px`
+				input.nextSibling.style.top = `-${input.nextSibling.offsetHeight + 5}px`
 			}
 		} else {
 			input.nextSibling.remove()
@@ -77,7 +78,12 @@ for (const element in inputs) {
 	})
 }
 
-function verifyInput(input) {
+function cloneHeader(header) {
+	const node = header.firstElementChild.cloneNode(true)
+	$clonedHeader.appendChild(node)
+}
+
+function checkInput(input) {
 	const char = {
 		// min and max permited characters
 		name: {
@@ -120,19 +126,6 @@ function verifyInput(input) {
 	}
 }
 
-function menuSticky() {
-	if (scrollvalue >= headerheight && sticky === true) {
-		$header.classList.add('sticky')
-		document.body.style.paddingTop = headerheight + $header.offsetHeight + 'px'
-		sticky = false
-	} else if (scrollvalue < headerheight && sticky === false) {
-		$header.classList.remove('sticky')
-		headerheight = $header.offsetHeight
-		document.body.style.paddingTop = '0'
-		sticky = true
-	}
-}
-
 function showNavigation() {
 	const $mobNav = document.createElement('div')
 	$mobNav.classList.add('menu', 'mobile')
@@ -149,15 +142,19 @@ function correctElDetails() {
 	$el.style.borderTopWidth = `${$el.parentNode.offsetHeight}px`
 }
 
-const $scrollTop = document.querySelector('.scroll-top')
-$scrollTop.addEventListener('click', ev => {
-	window.scrollTo({
-		top: 0,
-		behavior: 'smooth',
-	})
-})
+function show(el) {
+	el.style.visibility = 'visible'
+	window.setTimeout(() => (el.style.opacity = 1), 30)
+}
 
-emailjs.init(apiKeys.public.emailjs)
+function hide(el, animationTime) {
+	if (animationTime === null) {
+		animationTime = 300
+	}
+
+	el.style.opacity = 0
+	window.setTimeout(() => (el.style.visibility = 'hidden'), animationTime)
+}
 
 $form.addEventListener('submit', ev => {
 	ev.preventDefault()
@@ -179,7 +176,7 @@ $form.addEventListener('submit', ev => {
 			for (const el in inputs) {
 				inputs[el].classList.remove('active')
 			}
-			nameValid, emailValid, messageValid = false
+			nameValid, emailValid, (messageValid = false)
 			$ring.style.display = 'none'
 			$info.textContent = `Sua mensagem foi enviada!`
 			window.setTimeout(() => {
@@ -192,18 +189,19 @@ $form.addEventListener('submit', ev => {
 				console.log('Failed...', error)
 			}
 	} else {
+		console.log('Houve algum erro na validação do formulário.')
 	}
 })
 
-function show(el) {
-	el.style.visibility = 'visible'
-	window.setTimeout(() => (el.style.opacity = 1), 30)
-}
-
-function hide(el, animationTime) {
-	if (animationTime === null) {
-		animationTime = 300
+window.addEventListener('resize', ev => {
+	correctElDetails()
+	if (window.innerWidth < 768) {
 	}
-	el.style.opacity = 0
-	window.setTimeout(() => (el.style.visibility = 'hidden'), animationTime)
-}
+})
+
+$scrollTop.addEventListener('click', ev => {
+	window.scrollTo({
+		top: 0,
+		behavior: 'smooth',
+	})
+})

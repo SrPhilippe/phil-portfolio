@@ -1,2 +1,4 @@
 node_modules
 yarn.lock
+test
+docs/js/notusedanymore.js

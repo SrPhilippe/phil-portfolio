@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <div class="header clone"></div>
     <header id="header" class="header">
         <div class="container">
             <div class="wrapper">
@@ -20,14 +21,15 @@
                 </div>
                 <nav class="menu">
                     <ul>
-                        <li><a href="#">Início</a></li>
-                        <li><a href="#">Serviços</a>
+                        <li data-nav="top"><a href="#">Início</a></li>
+                        <li data-nav="services"><a href="#services">Serviços</a>
                             <ul class="submenu">
-                                <li><a href="#">Websites resposivos</a></li>
+                                <li data-nav="services"><a href="#services">Websites resposivos</a></li>
+                                <li data-nav="services"><a href="#services">Logomarcas</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Entrar em contato</a></li>
-                        <li><a href="#"><i class="bx bx-user-pin"></i>Redes</a>
+                        <li data-nav="contact"><a href="#contact">Entrar em contato</a></li>
+                        <li><a><i class="bx bx-user-pin"></i>Redes</a>
                             <ul class="submenu">
                                 <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank" rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
                                 <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i class="bx bxl-instagram-alt"></i> Instagram</a></li>
@@ -35,7 +37,7 @@
                                 <li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Sobre</a></li>
+                        <li data-nav="about"><a href="#about">Sobre</a></li>
                     </ul>
                 </nav>
             </div>
@@ -58,7 +60,7 @@
             </div>
             <div class="mask"></div>
         </section>
-        <section class="sc contact">
+        <section class="sc contact" id="contact">
             <div class="loading popup">
                 <div class="content">
                     <div class="lds-ring">
@@ -107,6 +109,13 @@
                 <div class="wrapper">
                     <img src="svg/contact-image.svg" alt="contact image">
                 </div>
+            </div>
+        </section>
+
+        <!-- Github repositories -->
+        <section class="sc repo">
+            <div class="container">
+                
             </div>
         </section>
 
