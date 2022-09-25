@@ -1,5 +1,8 @@
 import { apiKeys, mailPrefs } from './config.js'
 
+let token = Number(localStorage.getItem('formToken')) ?? localStorage.setItem("formToken", "3")
+let lastTimestamp = localStorage.getItem('lastTimestamp') ?? false
+
 const $header = document.querySelector('header')
 const $clonedHeader = document.querySelector('.header.clone')
 const $navbar = document.querySelector('nav.menu')
@@ -8,32 +11,26 @@ const $firstSection = document.querySelector('.sc.intro')
 const $scrollTop = document.querySelector('.scroll-top')
 const $menuItems = $navbar.querySelectorAll('ul>li')
 
-console.log($menuItems)
+let deviceWidth = window.innerWidth
 
 window.addEventListener('load', ev => {
 	correctElDetails()
+	cloneHeader($header) // Clones the header of the page
 })
 
 emailjs.init(apiKeys.public.emailjs) // Inits the emailjs instance
-cloneHeader($header) // Clones the header of the page
 
 const observer = new IntersectionObserver(entries => {
 	entries.forEach(entry => {
 		if (!entry.isIntersecting) {
-			$clonedHeader.style.top = '0'
-			$clonedHeader.style.opacity = '1'
+			$clonedHeader.classList.add('active')
 			show($scrollTop)
 		} else {
-			$clonedHeader.style.top = `-${$clonedHeader.offsetHeight}px`
-			$clonedHeader.style.opacity = '0'
+			$clonedHeader.classList.remove('active')
 			hide($scrollTop, null)
 		}
 	})
-},
-	{
-		rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px`
-	}
-)
+}, { rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px` })
 
 observer.observe($firstSection) // Observes the first section of the page
 
@@ -41,6 +38,7 @@ const inputs = {
 	name: $form.querySelector('input[name="username"]'),
 	email: $form.querySelector('input[type="email"]'),
 	message: $form.querySelector('textarea'),
+	submit: $form.querySelector('input[type="submit"]')
 }
 
 let nameValid = false,
@@ -49,38 +47,35 @@ let nameValid = false,
 
 for (const element in inputs) {
 	inputs[element].addEventListener('input', ev => {
-		let input = ev.currentTarget,
-			message = checkInput(ev.currentTarget)
+		let input = ev.currentTarget
 		if (input.value.length > 0) {
 			input.classList.add('active')
 			input.previousElementSibling.classList.add('active')
-
-			if (!input.nextElementSibling) {
-				let $p = document.createElement('p')
-				$p.classList.add('log')
-				input.after($p)
-			}
-
-			if (message === true) {
-				input.classList.remove('invalid')
-				input.nextSibling.remove()
-			} else {
-				input.classList.add('invalid')
-				input.nextElementSibling.textContent = message
-				input.nextSibling.style.top = `-${input.nextSibling.offsetHeight + 5}px`
-			}
+			showInputLog(input)
 		} else {
 			input.nextSibling.remove()
-			input.classList.remove('active')
+			input.classList.remove('active', 'invalid')
 			input.previousElementSibling.classList.remove('active')
-			input.classList.remove('invalid')
 		}
 	})
 }
 
-function cloneHeader(header) {
-	const node = header.firstElementChild.cloneNode(true)
-	$clonedHeader.appendChild(node)
+function showInputLog(input) {
+	let message = checkInput(input)
+	if (!input.nextElementSibling) {
+		let $p = document.createElement('p')
+		$p.classList.add('log')
+		input.after($p)
+	}
+
+	if (message === true) {
+		input.classList.remove('invalid')
+		input.nextSibling.remove()
+	} else {
+		input.classList.add('invalid')
+		input.nextElementSibling.textContent = message
+		input.nextSibling.style.top = `-${input.nextSibling.offsetHeight + 10}px`
+	}
 }
 
 function checkInput(input) {
@@ -123,17 +118,32 @@ function checkInput(input) {
 			messageValid = true
 			return true
 		}
+	} else if (input.isSameNode(inputs.submit)) {
+		if (nameValid || emailValid || messageValid !== true) {
+			return `Você precisa preencher todos os campos antes de validar!`
+		} else {
+			return true
+		}
 	}
 }
 
+if (deviceWidth < 768) {
+	showNavigation()
+}
+
 function showNavigation() {
-	const $mobNav = document.createElement('div')
-	$mobNav.classList.add('menu', 'mobile')
+	const $div = document.createElement('div')
+	$div.classList.add('menu-mobile')
 	for (let i = 0; i < 3; i++) {
 		let el = document.createElement('span')
-		$mobNav.append(el)
+		$div.append(el)
 	}
-	$navbar.prepend($mobNav)
+	$navbar.parentNode.after($div)
+}
+
+async function cloneHeader(header) {
+	const node = await header.firstElementChild.cloneNode(true)
+	$clonedHeader.appendChild(node)
 }
 
 function correctElDetails() {
@@ -164,32 +174,53 @@ $form.addEventListener('submit', ev => {
 		const $info = $loading.querySelector('.info')
 		const $ring = $loading.querySelector('.lds-ring')
 
-		$ring.style.display = 'inline-block'
-		$info.textContent = `Enviando`
-		show($loading)
+		token = localStorage.getItem('formToken')
+		if (token > 0) {
+			token--
+			localStorage.setItem("formToken", token)
 
-		// Generate five digits number to be used as message ID
-		ev.target.id_number.value = (Math.random() * 100000) | 0
-		ev.target.to_name.value = 'Philippe'
-		emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target).then(() => {
-			$form.reset()
-			for (const el in inputs) {
-				inputs[el].classList.remove('active')
-			}
-			nameValid, emailValid, (messageValid = false)
-			$ring.style.display = 'none'
-			$info.textContent = `Sua mensagem foi enviada!`
-			window.setTimeout(() => {
-				hide($loading)
-			}, 2000)
-		}),
-			error => {
+			$ring.style.display = 'inline-block'
+			$info.textContent = `Enviando`
+			show($loading)
+
+			// Generate five digits number to be used as message ID
+			ev.target.id_number.value = (Math.random() * 100000) | 0
+			ev.target.to_name.value = 'Philippe'
+			emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target).then(() => {
+				$form.reset()
+				for (const el in inputs) {
+					inputs[el].classList.remove('active')
+				}
+				nameValid, emailValid, (messageValid = false)
 				$ring.style.display = 'none'
-				$info.textContent = `Houve um erro ao enviar a mensagem.`
-				console.log('Failed...', error)
+				$info.textContent = `Sua mensagem foi enviada!`
+				window.setTimeout(() => {
+					hide($loading)
+				}, 2000)
+			}),
+				error => {
+					$ring.style.display = 'none'
+					$info.textContent = `Houve um erro ao enviar a mensagem.`
+					console.log('Failed...', error)
+				}
+
+		} else {
+			let todayInMs = (Date.now() / 1000 | 0),
+				timeSpent = todayInMs - Number(lastTimestamp),
+				convertHours = number => {
+					return (number / 60) / 60
+				}
+
+			if (convertHours(timeSpent) > 24) {
+				localStorage.setItem("formToken", "3")
+				localStorage.setItem("lastTimestamp", todayInMs)
+			} else {
+				console.log(`Você só poderá enviar depois de ${24 - convertHours(timeSpent)} horas.`)
 			}
+		}
+
 	} else {
-		console.log('Houve algum erro na validação do formulário.')
+		showInputLog(ev.target.querySelector('input[type="submit"]'))
 	}
 })
 

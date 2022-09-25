@@ -1,0 +1,27 @@
+/* ------------------------------------------------ */
+/* ELEMENTS INSERTED IN THE DOM ------------------- */
+
+.menu-mobile {
+    --size: 3.5rem;
+    top: 0;
+    right: 5vw;
+    translate: 0 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-inline: 0.8rem;
+    position: absolute;
+    display: flex;
+    width: calc(var(--size) * 1.3);
+    height:  var(--size);
+    background-color: var(--primary-dark-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-mobile > span {
+    height: 5px;
+    display: inline-block;
+    border-radius: 3px;
+    background-color: #FFF;
+}

@@ -4,10 +4,10 @@
 :root {
     color-scheme: dark;
 
-    --z-index-tooltip: 15;
+    --z-index-tooltip: 14;
     --z-index-popup: 10;
     --z-index-menu: 5;
-    --z-index-loading: 4;
+    --z-index-loading: 15;
 
     --primary-color: hsl(201, 70%, 43%);
     --primary-hl-color: hsl(201, 70%, 63%);
