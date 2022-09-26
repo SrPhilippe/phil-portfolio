@@ -18,7 +18,7 @@
     /* background-color: var(--primary-dark-color); */
     border-radius: 5px;
     cursor: pointer;
-    z-index: 17;
+    z-index: 19;
 }
 
 .menu-mobile>span {
@@ -46,4 +46,10 @@
 
 .menu-mobile.active>span:nth-child(2) {
     opacity: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-mobile {
+        z-index: var(--z-index-loading)
+    }
 }

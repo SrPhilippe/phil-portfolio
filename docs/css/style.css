@@ -697,7 +697,7 @@ i.bx {
     visibility: hidden;
     opacity: 0;
     position: fixed;
-    z-index: 20;
+    z-index: var(--z-index-scrolltop);
     bottom: 0;
     right: 0;
     margin: 0 2rem 2rem 0;
@@ -728,6 +728,9 @@ i.bx {
 
 /* Rule to devices <= 768 pixels wide */
 @media screen and (max-width: 768px) {
+    .scroll-top {
+        z-index: var(--z-index-loading);
+    }
 
     .header .logo {
         width: 10rem;

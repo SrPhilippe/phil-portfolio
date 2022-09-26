@@ -10,7 +10,7 @@ const $form = document.querySelector('.contact-form')
 const $firstSection = document.querySelector('.sc.slider')
 const $sections = document.querySelectorAll('.sc')
 const $scrollTop = document.querySelector('.scroll-top')
-const $navbar = document.querySelectorAll('nav.menu')
+const $navbar = document.querySelector('nav.menu')
 
 // $menuItems.forEach(el => {
 // 	console.log(el.parentNode.parentNode.parentNode.parentNode.parentNode)
@@ -61,11 +61,21 @@ window.addEventListener('load', ev => {
 		console.log($clonedHeader)
 		const $menuButton = document.querySelectorAll('.menu-mobile').item(0)
 		const $newNav = document.querySelectorAll('nav.menu').item(0)
+		const $links = document.querySelectorAll('nav.menu>ul>li')
 		$newNav.remove()
 
 		$menuButton.addEventListener('click', ev => {
 			$navbar.classList.toggle('active')
 			ev.currentTarget.classList.toggle('active')
+		})
+
+
+		$links.forEach(link => {
+			link.addEventListener('click', ev => {
+
+				$navbar.classList.remove('active')
+				$menuButton.classList.remove('active')
+			})
 		})
 	}
 })

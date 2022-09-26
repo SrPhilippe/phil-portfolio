@@ -6,9 +6,10 @@
 
     --z-index-tooltip: 14;
     --z-index-popup: 10;
-    --z-index-menu: 5;
-    --z-index-loading: 15;
-    --z-index-menu-mobile: 16;
+    --z-index-menu: 8;
+    --z-index-loading: 6;
+    --z-index-scrolltop: 17;
+    --z-index-menu-mobile: 18;
 
     --primary-color: hsl(201, 70%, 43%);
     --primary-hl-color: hsl(201, 70%, 63%);
