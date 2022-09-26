@@ -12,7 +12,7 @@ const $firstSection = document.querySelector('.sc.intro')
 const $scrollTop = document.querySelector('.scroll-top')
 const $menuItems = $navbar.querySelectorAll('ul>li')
 
-document.addEventListener('DOMContentLoaded', ev => {
+window.addEventListener('load', ev => {
 	correctElDetails()
 	const $clonedHeader = cloneHeader($header) // Clones the header of the page
 	const observer = new IntersectionObserver(entries => {
