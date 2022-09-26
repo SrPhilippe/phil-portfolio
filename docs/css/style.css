@@ -33,6 +33,10 @@ body {
     height: 100%;
 }
 
+body:has(.menu.active) {
+    overflow: hidden;
+}
+
 h1 {
     font-size: var(--h1-font-size);
 }
@@ -723,11 +727,23 @@ i.bx {
     }
 
     .header .menu {
-        width: 100%;
+        top: 0;
+        opacity: 0;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        visibility: hidden;
+        transition: all .5s ease;
+        z-index: var(--z-index-menu-mobile);
+        background-color: var(--dark-color);
+    }
+
+    .header .menu.active {
+        opacity: 1;
+        visibility: visible;
     }
 
     .header .menu>ul {
-        display: none;
         flex-direction: column;
     }
 
@@ -741,7 +757,8 @@ i.bx {
         height: auto;
         display: flex;
         justify-content: center;
-        padding: .8rem .5rem;
+        padding: 2rem .5rem;
+        font-size: var(--h2-font-size);
     }
 
 

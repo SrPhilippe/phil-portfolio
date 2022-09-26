@@ -1,38 +1,50 @@
 import { apiKeys, mailPrefs } from './config.js'
 
-let token = Number(localStorage.getItem('formToken')) ?? localStorage.setItem("formToken", "3")
-let lastTimestamp = localStorage.getItem('lastTimestamp') ?? false
+// Local storage variables to control submit rate in the contact form
+let token = (localStorage.formToken) ? localStorage.formToken : localStorage.formToken = 3,
+	lastTimestamp = localStorage.lastTimestamp ?? false,
+	deviceWidth = window.innerWidth
 
 const $header = document.querySelector('header')
-const $clonedHeader = document.querySelector('.header.clone')
 const $navbar = document.querySelector('nav.menu')
 const $form = document.querySelector('.contact-form')
 const $firstSection = document.querySelector('.sc.intro')
 const $scrollTop = document.querySelector('.scroll-top')
 const $menuItems = $navbar.querySelectorAll('ul>li')
 
-let deviceWidth = window.innerWidth
-
-window.addEventListener('load', ev => {
+document.addEventListener('DOMContentLoaded', ev => {
 	correctElDetails()
-	cloneHeader($header) // Clones the header of the page
+	const $clonedHeader = cloneHeader($header) // Clones the header of the page
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (!entry.isIntersecting) {
+				$clonedHeader.classList.add('active')
+				show($scrollTop)
+			} else {
+				$clonedHeader.classList.remove('active')
+				hide($scrollTop, null)
+			}
+		})
+	}, { rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px` })
+
+	observer.observe($firstSection) // Observes the first section of the page
+
+
+	if (deviceWidth < 768) {
+		showNavigation()
+		console.log($clonedHeader)
+		const $menuButton = document.querySelectorAll('.menu-mobile').item(0)
+		const $newNav = document.querySelectorAll('nav.menu').item(0)
+		$newNav.remove()
+	
+		$menuButton.addEventListener('click', ev => {
+			$navbar.classList.toggle('active')
+			ev.currentTarget.classList.toggle('active')
+		})
+	}
 })
 
 emailjs.init(apiKeys.public.emailjs) // Inits the emailjs instance
-
-const observer = new IntersectionObserver(entries => {
-	entries.forEach(entry => {
-		if (!entry.isIntersecting) {
-			$clonedHeader.classList.add('active')
-			show($scrollTop)
-		} else {
-			$clonedHeader.classList.remove('active')
-			hide($scrollTop, null)
-		}
-	})
-}, { rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px` })
-
-observer.observe($firstSection) // Observes the first section of the page
 
 const inputs = {
 	name: $form.querySelector('input[name="username"]'),
@@ -127,10 +139,6 @@ function checkInput(input) {
 	}
 }
 
-if (deviceWidth < 768) {
-	showNavigation()
-}
-
 function showNavigation() {
 	const $div = document.createElement('div')
 	$div.classList.add('menu-mobile')
@@ -138,12 +146,15 @@ function showNavigation() {
 		let el = document.createElement('span')
 		$div.append(el)
 	}
-	$navbar.parentNode.after($div)
+	$navbar.after($div)
 }
 
-async function cloneHeader(header) {
-	const node = await header.firstElementChild.cloneNode(true)
+function cloneHeader(header) {
+	const node = header.firstElementChild.cloneNode(true)
+	const $clonedHeader = document.querySelector('.header.clone')
 	$clonedHeader.appendChild(node)
+	return $clonedHeader
+
 }
 
 function correctElDetails() {
@@ -174,10 +185,10 @@ $form.addEventListener('submit', ev => {
 		const $info = $loading.querySelector('.info')
 		const $ring = $loading.querySelector('.lds-ring')
 
-		token = localStorage.getItem('formToken')
+		token = localStorage.formToken
 		if (token > 0) {
 			token--
-			localStorage.setItem("formToken", token)
+			localStorage.formToken = token
 
 			$ring.style.display = 'inline-block'
 			$info.textContent = `Enviando`
@@ -212,8 +223,8 @@ $form.addEventListener('submit', ev => {
 				}
 
 			if (convertHours(timeSpent) > 24) {
-				localStorage.setItem("formToken", "3")
-				localStorage.setItem("lastTimestamp", todayInMs)
+				localStorage.formToken = 3
+				localStorage.lastTimestamp = todayInMs
 			} else {
 				console.log(`Você só poderá enviar depois de ${24 - convertHours(timeSpent)} horas.`)
 			}
