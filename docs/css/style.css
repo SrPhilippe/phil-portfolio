@@ -751,7 +751,7 @@ i.bx {
         position: fixed;
         visibility: hidden;
         transition: all .5s ease;
-        z-index: var(--z-index-menu-mobile);
+        z-index: var(--z-index-menu);
         background-color: var(--dark-color);
     }
 
