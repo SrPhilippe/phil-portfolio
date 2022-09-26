@@ -6,16 +6,21 @@ let token = (localStorage.formToken) ? localStorage.formToken : localStorage.for
 	deviceWidth = window.innerWidth
 
 const $header = document.querySelector('header')
-const $navbar = document.querySelector('nav.menu')
 const $form = document.querySelector('.contact-form')
-const $firstSection = document.querySelector('.sc.intro')
+const $firstSection = document.querySelector('.sc.slider')
+const $sections = document.querySelectorAll('.sc')
 const $scrollTop = document.querySelector('.scroll-top')
-const $menuItems = $navbar.querySelectorAll('ul>li')
+const $navbar = document.querySelectorAll('nav.menu')
+
+// $menuItems.forEach(el => {
+// 	console.log(el.parentNode.parentNode.parentNode.parentNode.parentNode)
+// }) 
 
 window.addEventListener('load', ev => {
 	correctElDetails()
 	const $clonedHeader = cloneHeader($header) // Clones the header of the page
-	const observer = new IntersectionObserver(entries => {
+	const $menuItems = document.querySelectorAll('ul>li[data-nav]')
+	const observerIntro = new IntersectionObserver(entries => {
 		entries.forEach(entry => {
 			if (!entry.isIntersecting) {
 				$clonedHeader.classList.add('active')
@@ -27,7 +32,28 @@ window.addEventListener('load', ev => {
 		})
 	}, { rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px` })
 
-	observer.observe($firstSection) // Observes the first section of the page
+	const observerSections = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				$menuItems.forEach(link => {
+					link.classList.remove('active')
+					if (entry.target.classList.contains(link.dataset.nav)) {
+						link.classList.add('active')
+					}
+				})
+			}
+		})
+	}, {
+		threshold: 0.5
+	})
+	observerIntro.observe($firstSection) // Observes the first section of the page
+
+	$sections.forEach(section => {
+		observerSections.observe(section)
+	})
+
+	observerSections.observe($header)
+
 
 
 	if (deviceWidth < 768) {
@@ -36,7 +62,7 @@ window.addEventListener('load', ev => {
 		const $menuButton = document.querySelectorAll('.menu-mobile').item(0)
 		const $newNav = document.querySelectorAll('nav.menu').item(0)
 		$newNav.remove()
-	
+
 		$menuButton.addEventListener('click', ev => {
 			$navbar.classList.toggle('active')
 			ev.currentTarget.classList.toggle('active')

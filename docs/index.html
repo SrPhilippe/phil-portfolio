@@ -12,13 +12,15 @@
 
 <body>
     <div class="header clone"></div>
-    <header id="header" class="header">
+    <header id="header" class="header top">
         <div class="container">
             <div class="wrapper">
-                <div class="logo">
-                    <img src="img/phil-logo-minimalist.png" alt="Phil logo">
-                    <span>:)</span>
-                </div>
+                <a href="#top">
+                    <div class="logo">
+                        <img src="img/phil-logo-minimalist.png" alt="Phil logo">
+                        <span>:)</span>
+                    </div>
+                </a>
                 <nav class="menu">
                     <ul>
                         <li data-nav="top"><a href="#">Início</a></li>
@@ -44,8 +46,10 @@
         </div>
     </header>
     <main id="main" class="main">
-        <section class="sc slider"></section>
-        <section class="sc intro">
+        <section class="sc slider" id="slider">
+            <div class="container"></div>
+        </section>
+        <section class="sc intro" id="intro">
             <div class="container">
                 <div class="content left">
                     <h1>Bem-vindo!</h1>
@@ -59,6 +63,9 @@
                 </div>
             </div>
             <div class="mask"></div>
+        </section>
+        <section class="sc services" id="services">
+            <div class="container"></div>
         </section>
         <section class="sc contact" id="contact">
             <div class="loading popup">
@@ -111,11 +118,14 @@
                 </div>
             </div>
         </section>
+        <section class="sc about" id="about">
+            <div class="container"></div>
+        </section>
 
         <!-- Github repositories -->
         <section class="sc repo">
             <div class="container">
-                
+
             </div>
         </section>
 

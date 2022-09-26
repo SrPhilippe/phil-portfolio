@@ -1,6 +1,8 @@
 /* ------------------------------------------------ */
 /* ELEMENTS INSERTED IN THE DOM ------------------- */
-
+.sc>.container:not(:has(*)) {
+    height: 90vh;
+}
 .menu-mobile {
     --size: 5rem;
     top: 0;
