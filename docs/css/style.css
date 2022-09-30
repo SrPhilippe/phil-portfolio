@@ -837,7 +837,12 @@ i.bx {
         position: unset;
         width: 100%;
         right: unset;
-        border-radius: 50px;
+        border-radius: unset;
+    }
+
+    .sc.contact .content.right p {
+        border-radius: unset;
+        width: 100%;
     }
 
     .sc.contact .wrapper {
