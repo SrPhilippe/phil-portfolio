@@ -1,8 +1,8 @@
 import { apiKeys, mailPrefs } from './config.js'
 
 // Local storage variables to control submit rate in the contact form
-let token = (localStorage.formToken) ? localStorage.formToken : localStorage.formToken = 3,
-	lastTimestamp = localStorage.lastTimestamp ?? false,
+let token = Number(localStorage.token) ?? false,
+	lastTimestamp = Number(localStorage.lastTimestamp) ?? false,
 	deviceWidth = window.innerWidth
 
 const $header = document.querySelector('header')
@@ -213,18 +213,28 @@ function hide(el, animationTime) {
 	window.setTimeout(() => (el.style.visibility = 'hidden'), animationTime)
 }
 
-$form.addEventListener('submit', ev => {
-	ev.preventDefault()
+const currentTimestamp = () => {
+	return (Date.now() / 1000 | 0)
+}
 
+$form.addEventListener('submit', ev => {
+	ev.preventDefault() // preventing fromssss submit method
+	
 	if (nameValid && emailValid && messageValid) {
 		const $loading = document.querySelector('.sc.contact .popup')
 		const $info = $loading.querySelector('.info')
 		const $ring = $loading.querySelector('.lds-ring')
 
-		token = localStorage.formToken
+		token = localStorage.token // It's important to check the token whenever the form is submitted
+
+		if (!token || !lastTimestamp) { // newly user, or an user that never submitted the form
+			token = localStorage.token = 3
+			lastTimestamp = localStorage.lastTimestamp = currentTimestamp()
+		}
+
 		if (token > 0) {
 			token--
-			localStorage.formToken = token
+			localStorage.token = token
 
 			$ring.style.display = 'inline-block'
 			$info.textContent = `Enviando`
@@ -233,18 +243,24 @@ $form.addEventListener('submit', ev => {
 			// Generate five digits number to be used as message ID
 			ev.target.id_number.value = (Math.random() * 100000) | 0
 			ev.target.to_name.value = 'Philippe'
-			emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target).then(() => {
-				$form.reset()
-				for (const el in inputs) {
-					inputs[el].classList.remove('active')
-				}
-				nameValid, emailValid, (messageValid = false)
-				$ring.style.display = 'none'
-				$info.textContent = `Sua mensagem foi enviada!`
-				window.setTimeout(() => {
-					hide($loading)
-				}, 2000)
-			}),
+			console.log('Enviado')
+			window.setTimeout(() => {
+				hide($loading)
+			}, 2000)
+			emailjs.sendForm(mailPrefs.contactService, mailPrefs.templateId, ev.target)
+				.then(() => {
+					$form.reset()
+					for (const el in inputs) {
+						inputs[el].classList.remove('active')
+						inputs[el].previousElementSibling.classList.remove('active')
+					}
+					nameValid, emailValid, (messageValid = false)
+					$ring.style.display = 'none'
+					$info.textContent = `Sua mensagem foi enviada!`
+					window.setTimeout(() => {
+						hide($loading)
+					}, 2000)
+				}),
 				error => {
 					$ring.style.display = 'none'
 					$info.textContent = `Houve um erro ao enviar a mensagem.`
@@ -252,20 +268,16 @@ $form.addEventListener('submit', ev => {
 				}
 
 		} else {
-			let todayInMs = (Date.now() / 1000 | 0),
-				timeSpent = todayInMs - Number(lastTimestamp),
+			let limit = 24,
+				timeSpent = currentTimestamp() - lastTimestamp,
 				convertHours = number => {
-					return (number / 60) / 60
+					return (number / 60) / 60 // Converting seconds to hours
 				}
 
-			if (convertHours(timeSpent) > 24) {
-				localStorage.formToken = 3
-				localStorage.lastTimestamp = todayInMs
-			} else {
-				console.log(`Você só poderá enviar depois de ${24 - convertHours(timeSpent)} horas.`)
-			}
+			(convertHours(timeSpent) > limit)
+				? (token = localStorage.token = 3, lastTimestamp = localStorage.lastTimestamp = currentTimestamp())
+				: console.log(`Você só poderá enviar outra mensagem após ${limit} horas.`)
 		}
-
 	} else {
 		showInputLog(ev.target.querySelector('input[type="submit"]'))
 	}
