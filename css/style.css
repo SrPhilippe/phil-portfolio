@@ -854,6 +854,10 @@ i.bx {
         z-index: calc(var(--z-index-menu) + 1);
     }
 
+    .contact-form input[type="submit"] {
+        cursor: none;
+    }
+
     .footer .container {
         padding: var(--big-padding);
         align-items: stretch;
