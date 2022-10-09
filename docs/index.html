@@ -48,7 +48,14 @@
     
     <main id="main" class="main">
         <section class="sc slider" id="slider">
-            <div class="container"></div>
+            <div class="items-wrapper carousel">
+                <div class="items">
+                    <div class="item"><img src="./img/upload/slider-thumb-1.png" alt="slider 1"></div>
+                    <div class="item"><img src="./img/upload/slider-thumb-2.png" alt="slider 2"></div>
+                    <div class="item"><img src="./img/upload/slider-thumb-3.png" alt="slider 3"></div>
+                    <div class="item"><img src="./img/upload/slider-thumb-4.png" alt="slider 4"></div>
+                </div>
+            </div>
         </section>
         <section class="sc intro" id="intro">
             <div class="container">
@@ -91,15 +98,15 @@
                             </li>
                             <li>
                                 <label for="username">Nome</label>
-                                <input type="text" name="username" placeholder="Primeiro nome">
+                                <input type="text" name="username" data-input="username" placeholder="Primeiro nome">
                             </li>
                             <li>
                                 <label for="userEmail">Email</label>
-                                <input type="email" name="userEmail" placeholder="exemplo@host.com.br">
+                                <input type="email" name="userEmail" data-input="mail" placeholder="exemplo@host.com.br">
                             </li>
                             <li>
                                 <label for="message">Mensagem</label>
-                                <textarea name="message" placeholder="Digite sua mensagem..."></textarea>
+                                <textarea name="message" data-input="message" placeholder="Digite sua mensagem..."></textarea>
                             </li>
                             <li>
                                 <input type="submit" value="Enviar">
@@ -116,7 +123,7 @@
 
             <div class="overflow-wrap">
                 <div class="wrapper">
-                    <img src="svg/contact-image.svg" alt="contact image">
+                    <img src="img/svg/contact-image.svg" alt="contact image">
                 </div>
             </div>
         </section>
@@ -197,6 +204,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <!-- Main script -->
-<script src="js/main.js" defer type="module"></script>
+<script src="dist/bundle.js" defer></script>
 
 </html>

@@ -3,7 +3,7 @@
 
 :root {
     color-scheme: dark;
-
+    --tran-fade-normal: opacity .4s ease;
     --z-index-tooltip: 14;
     --z-index-popup: 10;
     --z-index-menu: 8;
