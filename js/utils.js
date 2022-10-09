@@ -47,3 +47,7 @@ export function createElement(type, options = {}) {
     })
     return element
 }
+
+export const currentTimestampSec = () => {
+	return (Date.now() / 1000 | 0)
+}
