@@ -283,6 +283,7 @@ i.bx {
 
 .sc.slider {
     overflow-x: hidden;
+    user-select: none;
 }
 
 .sc.slider .items-wrapper {
