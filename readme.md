@@ -1,15 +1,9 @@
-# 🚀 Welcome to your new awesome project!
+# My Portfolio
 
-This project has been created using **webpack-cli**, you can now run
+This is the repo of my personal website. Since it's a very simple project, I used github pages to host it.
 
-```
-npm run build
-```
+[Go to website >>](https://srphilippe.github.io/phil-portfolio/)
 
-or
+Next goal → → implement functions using [javascript classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) ← ←
 
-```
-yarn build
-```
-
-to bundle your application
+[![preview image](preview.png)](https://srphilippe.github.io/phil-portfolio/)
