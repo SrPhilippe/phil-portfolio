@@ -1,7 +1,6 @@
 /* ------------------------------------------------ */
 /* ELEMENTS INSERTED IN THE DOM ------------------- */
 
-
 .menu-mobile {
     --size: 5rem;
     top: 0;
@@ -17,6 +16,7 @@
     border-radius: 5px;
     cursor: pointer;
     z-index: var(--z-index-menu-mobile);
+
 }
 
 .menu-mobile>span {
@@ -32,6 +32,7 @@
     position: absolute;
     width: 50%;
     translate: 50% 0;
+
 }
 
 .menu-mobile.active>span:nth-child(1) {
@@ -48,6 +49,6 @@
 
 @media screen and (max-width: 768px) {
     .menu-mobile {
-        z-index: var(--z-index-popup)
+        z-index: var(--z-index-popup);
     }
 }

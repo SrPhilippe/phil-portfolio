@@ -1,7 +1,7 @@
 /* ------------------------------------------------ */
-@import "reset-n-var.css";
-@import "animations.css";
-@import "manipulated.css";
+@use "reset-n-var";
+@use "animations";
+@use "manipulated";
 
 .loading.popup.active {
     opacity: 1;
