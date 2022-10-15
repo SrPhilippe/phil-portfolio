@@ -8,17 +8,19 @@ const stylesHandler = MiniCssExtractPlugin.loader
 const isProduction = process.env.NODE_ENV == 'production'
 
 const config = {
-    entry: [
-        './js/main.js',
-        './css/style.css'
-    ],
+    entry: {
+        index: [
+            './js/main.js',
+            './css/style.scss'
+        ]
+    },
     output: {
-        filename: 'bundle.js',
         path: path.resolve(__dirname, 'docs'),
+        clean: true
     },
     devServer: {
         open: true,
-        host: 'localhost',
+        host: 'localhost'
     },
     optimization: {
         minimizer: [
@@ -28,22 +30,24 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
-            scriptLoading: 'module',
+            scriptLoading: 'defer',
             inject: 'body' // inject the script on the body
         }),
-        new MiniCssExtractPlugin({
-            filename: 'style.css'
-        }),
+        new MiniCssExtractPlugin()
     ],
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/i,
+                exclude: /node_modules/,
                 loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env']
+                }
             },
             {
-                test: /\.css$/i,
-                use: [stylesHandler, 'css-loader', 'postcss-loader'],
+                test: /\.s[ac]ss$/i,
+                use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,

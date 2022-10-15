@@ -1,4 +1,4 @@
-import { qs, qsa, createElement } from './utils.js'
+import { qs } from './utils.js'
 import { apiKeys, mailPrefs } from './config.js'
 import Carousel from './carousel.js'
 import FormValidator from './formValidator.js'
