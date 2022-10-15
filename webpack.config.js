@@ -3,9 +3,9 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const stylesHandler = MiniCssExtractPlugin.loader
 
 const isProduction = process.env.NODE_ENV == 'production'
-const stylesHandler = MiniCssExtractPlugin.loader
 
 const config = {
     entry: {
@@ -15,12 +15,12 @@ const config = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, 'docs')
+        path: path.resolve(__dirname, 'docs'),
+        clean: true
     },
     devServer: {
-        open: false,
-        host: 'localhost',
-        watchFiles: ['./index.html']
+        open: true,
+        host: 'localhost'
     },
     optimization: {
         minimizer: [
@@ -51,20 +51,19 @@ const config = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset/resource',
+                type: 'asset',
             },
             {
                 test: /\.html$/i,
                 use: ['html-loader']
             }
-        ]
-    }
+        ],
+    },
 }
 
 module.exports = () => {
     if (isProduction) {
-        config.mode = 'production',
-        config.output.clean = true
+        config.mode = 'production'
     } else {
         config.mode = 'development'
     }
