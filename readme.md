@@ -6,4 +6,4 @@ This is the repo of my personal website. Since it's a very simple project, I use
 
 Next goal → → implement functions using [javascript classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) ← ←
 
-[![preview image](preview.png)](https://srphilippe.github.io/phil-portfolio/)
+[![preview image](.github/preview.png)](https://srphilippe.github.io/phil-portfolio/)
