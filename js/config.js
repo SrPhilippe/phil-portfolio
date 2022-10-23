@@ -1,15 +1,20 @@
+export { apiKeys, mailPrefs, patterns }
 
-export { apiKeys, mailPrefs }
+const githubUser = "srphilippe"
 
 const apiKeys = {
-    public: {
-        emailjs: "9CEj6LfIzI9NzUiv_",
-        github: "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"
-    }
+  public: {
+    emailjs: "9CEj6LfIzI9NzUiv_",
+    repos: `https://api.github.com/users/${githubUser}/repos`
+  }
 }
 
 const mailPrefs = {
-    templateId: "template_3fubw4l",
-    contactService: "service_5isf3yr"
-    
+  templateId: "template_3fubw4l",
+  contactService: "service_5isf3yr"
+
+}
+
+const patterns = {
+  mail: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 }
