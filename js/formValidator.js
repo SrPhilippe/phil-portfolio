@@ -6,16 +6,16 @@ export default class FormValidator {
         this._form.addEventListener('submit', e => {
             e.preventDefault()
             if (!this.hasErrors) {
-                // Submit
-                console.log('the form was submitted')
+                
             }
         })
     }
 
     registerInput(selector, rules) { // Register
+        const defaultPattern = /[^]*/
         const inputField = this._form.querySelector(`[data-input="${selector}"]`)
         this._inputWithErrors.add(inputField)
-        rules.pattern = rules.pattern ?? /[^]*/ // ? If the pattern is null it will match any string
+        rules.pattern = rules.pattern ?? defaultPattern  // ? If the pattern is null it will match any string
         rules.message = ''
         inputField.addEventListener('input', ev => this.checkErrors(ev, inputField, rules))
         this.createElementError(inputField)
@@ -77,6 +77,10 @@ export default class FormValidator {
             logElement.classList.remove('active')
             input.classList.remove('invalid')
         }
+    }
+
+    verifyToken() {
+        token = localStorage.token
     }
 
 }

@@ -1,28 +1,27 @@
-import { qs } from './utils.js'
-import { apiKeys, mailPrefs } from './config.js'
+import { qs, addClass, rmClass, toggClass, currentTimestampSec as currentSec } from './utils.js'
+import { apiKeys, mailPrefs, patterns } from './config.js'
 import Carousel from './carousel.js'
 import FormValidator from './formValidator.js'
 
-const cf = new FormValidator('.contact-form')
+// Local storage variables to control submit rate in the contact form
+let token = Number(localStorage.token) ?? false
+let lastTimestamp = Number(localStorage.lastTimestamp) ?? false
+let deviceWidth = window.innerWidth
 
-// Contact form instances
-cf.registerInput('username', {min: 3, max: 23, pattern: null})
-cf.registerInput('message', {min: 6, max: 1000, pattern: null})
-cf.registerInput('mail', {min: 8, max: 30, pattern: /^[^ ]+@[^ ]+\.[a-z]{2,3}$/})
+// Contact form instance
+const cf = new FormValidator('.contact-form')
+// Contact form registration
+cf.registerInput('username', { min: 3, max: 23, pattern: null })
+cf.registerInput('message', { min: 6, max: 1000, pattern: null })
+cf.registerInput('mail', { min: 8, max: 30, pattern: patterns.mail })
 
 // EmailJS instance
 emailjs.init(apiKeys.public.emailjs)
 
 Carousel('.items-wrapper.carousel')
 
-// Local storage variables to control submit rate in the contact form
-let token = Number(localStorage.token) ?? false,
-	lastTimestamp = Number(localStorage.lastTimestamp) ?? false,
-	deviceWidth = window.innerWidth
-
 const $header = qs('header')
 const $form = qs('.contact-form')
-const $firstSection = qs('.sc.slider')
 const $sections = document.querySelectorAll('.sc')
 const $scrollTop = qs('.scroll-top')
 const $navbar = qs('nav.menu')
@@ -39,7 +38,7 @@ $form.addEventListener('submit', ev => {
 
 		if (!token || !lastTimestamp) { // newly user, or an user that never submitted the form
 			token = localStorage.token = 3
-			lastTimestamp = localStorage.lastTimestamp = currStampSeconds()
+			lastTimestamp = localStorage.lastTimestamp = currentSec()
 		}
 
 		if (token > 0) {
@@ -78,14 +77,14 @@ $form.addEventListener('submit', ev => {
 				}
 
 		} else {
-			let limit = 24,
-				timeSpent = currStampSeconds() - lastTimestamp,
-				convertHours = number => {
-					return (number / 60) / 60 // Converting seconds to hours
-				}
+			let limit = 24
+			let timeSpent = currentSec() - lastTimestamp
+			const convertHours = number => {
+				return (number / 60) / 60 // Converting seconds to hours
+			}
 
 			(convertHours(timeSpent) > limit)
-				? (token = localStorage.token = 3, lastTimestamp = localStorage.lastTimestamp = currStampSeconds())
+				? (token = localStorage.token = 3, lastTimestamp = localStorage.lastTimestamp = currentSec())
 				: console.log(`Você só poderá enviar outra mensagem após ${limit} horas.`)
 		}
 	} else {
@@ -96,105 +95,109 @@ $form.addEventListener('submit', ev => {
 window.addEventListener('load', ev => {
 	correctElDetails()
 	const $clonedHeader = cloneHeader($header) // Clones the header of the page
-	const $menuItems = document.querySelectorAll('ul>li[data-nav]')
-	const observerIntro = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			if (!entry.isIntersecting) {
-				$clonedHeader.classList.add('active')
-				$scrollTop.classList.add('active')
-			} else {
-				$clonedHeader.classList.remove('active')
-				$scrollTop.classList.remove('active')
-			}
-		})
-	}, { rootMargin: `-${$firstSection.offsetHeight}px 0px 0px 0px` })
+	if (deviceWidth < 768) { checkMenu(true) }
 
-	const observerSections = new IntersectionObserver(entries => {
+	const $menuItems = document.querySelectorAll('ul>li[data-nav]')
+
+	const obsHeader = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			(!entry.isIntersecting)
+				? (addClass($clonedHeader), addClass($scrollTop))
+				: (rmClass($clonedHeader), rmClass($scrollTop))
+		})
+	})
+
+	obsHeader.observe($header)
+
+	const obsSections = new IntersectionObserver(entries => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
 				$menuItems.forEach(link => {
-					link.classList.remove('active')
+					rmClass(link)
 					if (entry.target.classList.contains(link.dataset.nav)) {
-						link.classList.add('active')
+						addClass(link)
+					}
+				})
+			} else {
+				$menuItems.forEach($item => {
+					if ($item.dataset.nav === 'top') {
+						addClass($item)
 					}
 				})
 			}
 		})
-	}, {
-		threshold: 0.5
-	})
-	observerIntro.observe($firstSection) // Observes the first section of the page
-
-	$sections.forEach(section => {
-		observerSections.observe(section)
-	})
-
-	observerSections.observe($header)
-
-
-
-	if (deviceWidth < 768) {
-		showNavigation()
-		const $menuButton = document.querySelectorAll('.menu-mobile').item(0)
-		const $newNav = document.querySelectorAll('nav.menu').item(0)
-		const $links = document.querySelectorAll('nav.menu>ul>li')
-		$newNav.remove()
-
-		$menuButton.addEventListener('click', ev => {
-			$navbar.classList.toggle('active')
-			ev.currentTarget.classList.toggle('active')
+	},
+		{
+			threshold: 0.5
 		})
 
+	$sections.forEach($section => { // Observes all sections
+		obsSections.observe($section)
 
-		$links.forEach(link => {
-			link.addEventListener('click', ev => {
-
-				$navbar.classList.remove('active')
-				$menuButton.classList.remove('active')
-			})
-		})
-	}
+		$section.style.scrollMarginTop = // Fixes the overflowing fixed menu anchor
+			`${$clonedHeader.offsetHeight}px`
+	})
 })
 
+const checkMenu = (isActive) => {
+	const menuMobile = document.querySelector('.menu-mobile') ?? false
+	const $links = document.querySelectorAll('nav.menu>ul>li')
 
 
-const showNavigation = () => {
-	const $div = document.createElement('div')
-	$div.classList.add('menu-mobile')
-	for (let i = 0; i < 3; i++) {
-		let el = document.createElement('span')
-		$div.append(el)
+	if (!menuMobile) {
+		const div = document.createElement('div')
+		addClass(div, ['menu-mobile'])
+		for (let i = 0; i < 3; i++) {
+			let span = document.createElement('span')
+			div.append(span)
+		}
+
+		$navbar.after(div)
+
+		div.addEventListener('click', ev => {
+			toggClass($navbar)
+			toggClass(ev.currentTarget, ['opened'])
+		})
+
+		if (isActive) { addClass(div) }
+	} else {
+		(isActive) ? addClass(menuMobile) : rmClass(menuMobile)
 	}
-	$navbar.after($div)
+
+	$links.forEach(link => {
+		link.addEventListener('click', ev => {
+			rmClass($navbar)
+			rmClass(ev.currentTarget)
+		})
+	})
 }
 
 const cloneHeader = header => {
-	const node = header.firstElementChild.cloneNode(true)
-	const $clonedHeader = qs('.header.clone')
-	$clonedHeader.appendChild(node)
-	return $clonedHeader
-
+	const node = header.cloneNode(true)
+	addClass(node, ['clone'])
+	rmClass(node, ['top'])
+	node.removeAttribute('id')
+	header.before(node)
+	return node
 }
 
 const correctElDetails = () => {
-	const $el = qs('.sc.intro .mask')
-	$el.style.borderRightWidth = `${$el.parentNode.offsetWidth}px`
-	$el.style.borderTopWidth = `${$el.parentNode.offsetHeight}px`
+	const el = qs('.sc.intro .mask')
+	el.style.borderRightWidth = `${el.parentNode.offsetWidth}px`
+	el.style.borderTopWidth = `${el.parentNode.offsetHeight}px`
 }
 
-const currStampSeconds = () => {
-	return (Date.now() / 1000 | 0)
-}
-
-
-
-window.addEventListener('resize', ev => {
+window.addEventListener('resize', e => {
+	deviceWidth = window.innerWidth
 	correctElDetails()
-	if (window.innerWidth < 768) {
+	if (deviceWidth < 768) {
+		checkMenu(true)
+	} else {
+		checkMenu(false)
 	}
 })
 
-$scrollTop.addEventListener('click', ev => {
+$scrollTop.addEventListener('click', e => {
 	window.scrollTo({
 		top: 0,
 		behavior: 'smooth',
