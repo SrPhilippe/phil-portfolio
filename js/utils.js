@@ -1,13 +1,9 @@
-export function addGlobalEventListener(
-  type,
-  selector,
-  callback,
-  options,
-  parent = document
-) {
-  parent.addEventListener(type, e => {
-    if (e.target.matches(selector)) callback(e)
-  },
+export function addGlobalEventListener(type, selector, callback, options, parent = document) {
+  parent.addEventListener(
+    type,
+    e => {
+      if (e.target.matches(selector)) callback(e)
+    },
     options
   )
 }
@@ -32,22 +28,26 @@ export function qsa(selector, parent = document) {
   return [...parent.querySelectorAll(selector)]
 }
 
+export const currentTimestampSec = () => {
+  return (Date.now() / 1000) | 0
+}
+
 export function createElement(type, options = {}) {
   const element = document.createElement(type)
   Object.entries(options).forEach(([key, value]) => {
-    if (key === "class") {
+    if (key === 'class') {
       element.classList.add(value)
       return
     }
 
-    if (key === "dataset") {
+    if (key === 'dataset') {
       Object.entries(value).forEach(([dataKey, dataValue]) => {
         element.dataset[dataKey] = dataValue
       })
       return
     }
 
-    if (key === "text") {
+    if (key === 'text') {
       element.textContent = value
       return
     }
@@ -55,8 +55,4 @@ export function createElement(type, options = {}) {
     element.setAttribute(key, value)
   })
   return element
-}
-
-export const currentTimestampSec = () => {
-  return (Date.now() / 1000 | 0)
 }

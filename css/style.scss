@@ -289,7 +289,7 @@ i.bx {
         margin-bottom: 0.8rem;
     }
 
-    &:not(.slider) {
+    &:empty {
         // ! THIS MUST BE REMOVED LATTER
         min-height: 100vh;
     }
@@ -693,6 +693,31 @@ i.bx {
         }
 
     }
+
+    &.about {
+        background: linear-gradient(-45deg, var(--primary-color) 10%, transparent 90%);
+
+        .wrapper {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding-bottom: 1.5rem;
+
+            p.desc {
+                width: 50%;
+            }
+
+            .profile-image {
+                width: 30%;
+                order: 1;
+
+                img {
+                    border-radius: 100%;
+                }
+            }
+        }
+
+    }
 }
 
 /* ++Footer --------------------------------------- */
@@ -914,6 +939,7 @@ i.bx {
     }
 
     .sc {
+
         &.intro {
             .container {
                 grid-template-columns: 1fr;
