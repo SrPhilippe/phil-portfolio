@@ -7,8 +7,11 @@
       "default",
       {
         "ignore": [
+          "scale",
+          "rotate",
+          "translate",
           "user-select",
-          "translate"
+          "scroll-behavior"
         ]
       }
     ]

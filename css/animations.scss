@@ -23,3 +23,21 @@
         transform: translateY(0);
     }
 }
+
+@keyframes invalid {
+
+    0%,
+    100% {
+        translate: 0;
+    }
+
+    20%,
+    60% {
+        translate: 8px 0;
+    }
+
+    40%,
+    80% {
+        translate: -8px 0;
+    }
+}

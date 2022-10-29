@@ -5,6 +5,7 @@ const githubUser = "srphilippe"
 const apiKeys = {
   public: {
     emailjs: "9CEj6LfIzI9NzUiv_",
+    github: `https://api.github.com/users/${githubUser}`,
     repos: `https://api.github.com/users/${githubUser}/repos`
   }
 }
