@@ -3,13 +3,14 @@ import { apiKeys, mailPrefs, patterns } from './config.js'
 import Carousel from './carousel.js'
 import FormValidator from './formValidator.js'
 
-// Local storage variables to control submit rate in the contact form
-let token = Number(localStorage.token) ?? false
-let lastTimestamp = Number(localStorage.lastTimestamp) ?? false
 let deviceWidth = window.innerWidth
 
 // Contact form instance
-const cf = new FormValidator('.contact-form')
+const cf = new FormValidator('.contact-form', {
+  token: Number(localStorage.token),
+  lastTimestamp: Number(localStorage.lastTimestamp),
+})
+
 // Contact form registration instances
 cf.registerInput('username', { min: 3, max: 23, pattern: null })
 cf.registerInput('message', { min: 6, max: 1000, pattern: null })
@@ -82,10 +83,9 @@ const checkMenu = isActive => {
   const $links = document.querySelectorAll('nav.menu>ul>li')
 
   if (!menuMobile) {
-    const div = document.createElement('div')
-    addClass(div, ['menu-mobile'])
+    const div = createElement('div', { class: 'menu-mobile' })
     for (let i = 0; i < 3; i++) {
-      let span = document.createElement('span')
+      let span = createElement('span')
       div.append(span)
     }
 
@@ -144,8 +144,7 @@ $scrollTop.addEventListener('click', e => {
 })
 
 const sectionRepo = document.querySelector('.sc.repo .container')
-const content = document.createElement('div')
-addClass(content, ['content'])
+const content = createElement('div', { class: 'content' })
 sectionRepo.append(content)
 
 fetch(apiKeys.public.repos)
@@ -157,9 +156,9 @@ fetch(apiKeys.public.repos)
           <p class="row name"><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></p>
           <p class="row description"> ${repo.description}</p>
           <p class="row language">{language_data}</p>
+          <a class="row button" href="${repo.html_url}" target="_blank">Ir para repositório<i class="bx bx-link-external"></i></a>
         `
-        let div = document.createElement('div')
-        addClass(div, ['item', `repo-${i + 1}`])
+        let div = createElement('div', { class: `item` })
         div.innerHTML = htmlContent
 
         sectionRepo.querySelector('.content').append(div)
