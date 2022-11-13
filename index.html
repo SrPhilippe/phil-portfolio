@@ -24,22 +24,22 @@
           <ul>
             <li data-nav="top"><a href="#top">Início</a></li>
             <li data-nav="services"><a href="#services">Serviços</a>
-                            <ul class="submenu">
-                                <li data-nav="services"><a href="#services">Websites resposivos</a></li>
-            <li data-nav="services"><a href="#services">Logomarcas</a></li>
-          </ul>
-          </li>
-          <li data-nav="contact"><a href="#contact">Entrar em contato</a></li>
-          <li><a><i class="bx bx-user-pin"></i>Redes</a>
-                            <ul class="submenu">
-                                <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank" rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
-          <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i class="bx bxl-instagram-alt"></i> Instagram</a></li>
-          <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Github</a></li>
-          <li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
-          </ul>
-          </li>
-          <li data-nav="repo"><a href="#repo">Github repo</a></li>
-          <li data-nav="about"><a href="#about">Sobre</a></li>
+              <ul class="submenu">
+                <li data-nav="services"><a href="#services">Websites resposivos</a></li>
+                <li data-nav="services"><a href="#services">Logomarcas</a></li>
+              </ul>
+            </li>
+            <li data-nav="contact"><a href="#contact">Entrar em contato</a></li>
+            <li><a><i class="bx bx-user-pin"></i>Redes</a>
+              <ul class="submenu">
+                <li><a href="https://www.linkedin.com/in/philippehenrique/" target="_blank" rel="noopener"><i class="bx bxl-linkedin-square"></i> Linkedin</a></li>
+                <li><a href="https://instagram.com/elpelippe" target="_blank" rel="noopener"><i class="bx bxl-instagram-alt"></i> Instagram</a></li>
+                <li><a href="https://github.com/SrPhilippe/" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Github</a></li>
+                <li><a href="mailto:philippehenrique@outlook.com"><i class="bx bxs-envelope"></i> E-mail</a></li>
+              </ul>
+            </li>
+            <li data-nav="repo"><a href="#repo">Github repo</a></li>
+            <li data-nav="about"><a href="#about">Sobre</a></li>
           </ul>
         </nav>
       </div>
@@ -73,8 +73,7 @@
       <div class="mask"></div>
     </section>
     <section class="sc services" id="services">
-      <div class="container">
-      </div>
+      <div class="container"></div>
     </section>
     <section class="sc contact" id="contact">
       <div class="loading popup">
@@ -85,7 +84,10 @@
             <div></div>
             <div></div>
           </div>
-          <p class="info">Sua Mensagem foi enviada com sucesso</p>
+          <p class="info"></p>
+          <div class="control">
+            <button type="submit" class="confirm">OK</button>
+          </div>
         </div>
       </div>
       <div class="container">
@@ -93,31 +95,30 @@
           <form class="contact-form" action="#" method="#">
             <ul>
               <li>
-                                <input type="hidden" name="to_name">
-                                <input type="hidden" name="id_number">
-                            </li>
+                <input type="hidden" name="to_name">
+                <input type="hidden" name="id_number">
+              </li>
               <li>
-                                <label for="username">Nome</label>
-                                <input type="text" name="username" data-input="username" placeholder="Primeiro nome">
-                            </li>
+                <label for="username">Nome</label>
+                <input type="text" name="username" data-input="username" placeholder="Primeiro nome">
+              </li>
               <li>
-                                <label for="userEmail">Email</label>
-                                <input type="email" name="userEmail" data-input="mail" placeholder="exemplo@host.com.br">
-                            </li>
+                <label for="userEmail">Email</label>
+                <input type="email" name="userEmail" data-input="mail" placeholder="exemplo@host.com.br">
+              </li>
               <li>
-                                <label for="message">Mensagem</label>
-                                <textarea name="message" data-input="message" placeholder="Digite sua mensagem..."></textarea>
-                            </li>
+                <label for="message">Mensagem</label>
+                <textarea name="message" data-input="message" placeholder="Digite sua mensagem..."></textarea>
+              </li>
               <li>
-                                <input type="submit" value="Enviar">
-                            </li>
+                <input type="submit" value="Enviar">
+              </li>
             </ul>
           </form>
         </div>
         <div class="content right">
           <h1>Contato</h1>
-          <p>Orçamentos, elogios, sugestões, informações... Preencha o Formulário de contato para que eu possa
-            ser notificado.</p>
+          <p>Orçamentos, elogios, sugestões, informações... Preencha o Formulário de contato para que eu possa ser notificado.</p>
         </div>
       </div>
 
@@ -130,6 +131,7 @@
     <section class="sc repo" id="repo">
       <div class="container">
         <h1>Github repositories</h1>
+        <p>Aqui está uma lista dos meus repositórios no github. Aliás, o fetch aqui acontece de forma automática ;)</p>
       </div>
     </section>
     <section class="sc about" id="about">
@@ -161,17 +163,17 @@
           <h2>Source title</h2>
           <ul>
             <li>
-                            <p>Relative source 1</p>
-                        </li>
+              <p>Relative source 1</p>
+            </li>
             <li>
-                            <p>Relative source 2</p>
-                        </li>
+              <p>Relative source 2</p>
+            </li>
             <li>
-                            <p>Relative source 3</p>
-                        </li>
+              <p>Relative source 3</p>
+            </li>
             <li>
-                            <p>Relative source 4</p>
-                        </li>
+              <p>Relative source 4</p>
+            </li>
           </ul>
         </div>
         <div class="links">
