@@ -21,15 +21,16 @@ emailjs.init(apiKeys.public.emailjs)
 
 Carousel('.items-wrapper.carousel')
 
-const $header = qs('header')
-const $sections = document.querySelectorAll('.sc')
-const $scrollTop = qs('.scroll-top')
-const $navbar = qs('nav.menu')
-const $menuItems = document.querySelectorAll('ul>li[data-nav]')
+const e_header = qs('header')
+const e_sections = document.querySelectorAll('.sc')
+const e_scrollTopBtn = qs('.scroll-top')
+const e_navbar = qs('nav.menu')
 
 window.addEventListener('load', ev => {
   correctElDetails()
-  const $clonedHeader = cloneHeader($header) // Clones the header of the page
+  const e_clonedHeader = cloneHeader(e_header) // Clones the header of the page
+  const e_menuItems = document.querySelectorAll('ul>li[data-nav]')
+
   if (deviceWidth < 768) {
     checkMenu(true)
   }
@@ -37,44 +38,37 @@ window.addEventListener('load', ev => {
   const obsHeader = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       !entry.isIntersecting
-        ? (addClass($clonedHeader), addClass($scrollTop))
-        : (rmClass($clonedHeader), rmClass($scrollTop))
+        ? (addClass(e_clonedHeader), addClass(e_scrollTopBtn))
+        : (rmClass(e_clonedHeader), rmClass(e_scrollTopBtn))
     })
   })
 
-  obsHeader.observe($header)
+  obsHeader.observe(e_header)
 
   const obsSections = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          $menuItems.forEach(link => {
+          console.log(entry.target)
+          e_menuItems.forEach(link => {
+            if (link.dataset.nav === 'top') {
+              rmClass(link)
+            }
             rmClass(link)
             if (entry.target.classList.contains(link.dataset.nav)) {
               addClass(link)
             }
           })
-        } else {
-          $menuItems.forEach($item => {
-            if ($item.dataset.nav === 'top') {
-              addClass($item)
-            }
-          })
         }
       })
     },
-    {
-      threshold: 0.5,
-    }
+    { threshold: 0.5 }
   )
 
-  $sections.forEach($section => {
-    // Observes all sections
-    obsSections.observe($section)
+  e_sections.forEach(section => {
+    obsSections.observe(section) // Observes all sections
 
-    $section.style.scrollMarginTop =
-      // Fixes the overflowing fixed menu anchor
-      `${$clonedHeader.offsetHeight}px`
+    section.style.scrollMarginTop = `${e_clonedHeader.offsetHeight}px` // Fixes the overflowing fixed menu anchor
   })
 })
 
@@ -89,16 +83,16 @@ const checkMenu = isActive => {
       div.append(span)
     }
 
-    $navbar.after(div)
+    e_navbar.after(div)
 
     div.addEventListener('click', ev => {
-      toggClass($navbar)
+      toggClass(e_navbar)
       toggClass(ev.currentTarget, ['opened'])
     })
 
     $links.forEach(link => {
       link.addEventListener('click', ev => {
-        rmClass($navbar)
+        rmClass(e_navbar)
         rmClass(div, ['opened'])
       })
     })
@@ -136,7 +130,7 @@ window.addEventListener('resize', e => {
   }
 })
 
-$scrollTop.addEventListener('click', e => {
+e_scrollTopBtn.addEventListener('click', e => {
   window.scrollTo({
     top: 0,
     behavior: 'smooth',
